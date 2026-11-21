@@ -1,0 +1,1234 @@
+<!-- =====================================================================
+  CBT ONLINE - FRONTEND BLOGGER (satu file: HTML + CSS + JS)
+  Cara pakai: Blogger > Postingan Baru > ubah ke "Tampilan HTML" > tempel seluruh kode ini.
+  Ubah IS_PREVIEW menjadi false dan isi GAS_URL sebelum dipublikasikan.
+====================================================================== -->
+
+<!-- KODE THUMBNAIL POSTINGAN BLOGGER (tersembunyi). Ganti URL gambar sesuai keinginan Anda. -->
+<div style="display:none"><img src="https://placehold.co/600x400/1d4ed8/ffffff.png?text=CBT+Online" alt="CBT Online" width="600" height="400" /></div>
+
+<style>
+html,body{overflow:hidden!important}
+#cbt-root{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483000;background:#f1f5f9;color:#0f172a;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;overflow:hidden;text-align:left;-webkit-text-size-adjust:100%;--pri:#2563eb;--prid:#1d4ed8;--bd:#e2e8f0;--mut:#64748b;--ok:#16a34a;--warn:#d97706;--err:#dc2626}
+#cbt-root *{box-sizing:border-box}
+#cbt-root [hidden]{display:none!important}
+#cbt-root h1,#cbt-root h2,#cbt-root h3,#cbt-root p{margin:0;padding:0;border:0;background:none;font-family:inherit;letter-spacing:0;text-transform:none;text-shadow:none}
+#cbt-root button,#cbt-root input,#cbt-root select,#cbt-root textarea{font:inherit;color:inherit;margin:0}
+#cbt-root table{margin:0;width:100%;border-collapse:collapse}
+#cbt-root img{max-width:100%}
+#cbt-root .mut{color:var(--mut)}
+#cbt-root .sp{flex:1}
+#cbt-root .pad{padding:24px}
+#cbt-root .block{display:block;width:100%}
+/* login */
+#cbt-login{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+.lg-card{background:#fff;border-radius:16px;padding:28px 26px;width:100%;max-width:380px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.lg-logo{font-size:44px;text-align:center}
+.lg-card h1{text-align:center;font-size:24px;font-weight:700;margin:4px 0}
+.lg-card .mut{text-align:center;margin-bottom:16px;font-size:14px}
+.note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;border-radius:8px;padding:8px 10px;font-size:13px;margin-bottom:12px}
+/* form */
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:#334155}
+.fg input,.fg select,.fg textarea,.inp{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:9px 11px;background:#fff;outline:none;font-size:15px}
+.fg input:focus,.fg select:focus,.fg textarea:focus,.inp:focus,.ce:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.fg textarea{min-height:120px;resize:vertical}
+.fg .hint{font-size:12px;color:var(--mut);margin-top:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 12px}
+/* buttons */
+.btn{border:1px solid var(--bd);background:#fff;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:500;line-height:1.3;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.btn:hover{background:#f8fafc}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.pri:hover{background:var(--prid)}
+.btn.danger{background:var(--err);border-color:var(--err);color:#fff}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.sm{padding:4px 9px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+/* app shell */
+.topbar{height:56px;flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;background:linear-gradient(90deg,#1e3a8a,#2563eb);color:#fff}
+.topbar b{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .btn{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35);color:#fff}
+#tb-user{font-size:13px;opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
+.hb{display:none;background:none;border:0;color:#fff;font-size:22px;cursor:pointer;padding:0 6px}
+.layout{flex:1;display:flex;min-height:0;position:relative}
+.sb{width:225px;flex:none;background:#0f172a;color:#cbd5e1;padding:12px 10px;overflow:auto}
+.sb button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;color:inherit;padding:10px 12px;border-radius:8px;cursor:pointer;margin-bottom:3px;font-size:14.5px}
+.sb button:hover{background:#1e293b}
+.sb button.on{background:var(--pri);color:#fff}
+.main{flex:1;overflow:auto;padding:20px;min-width:0}
+@media(max-width:860px){.hb{display:block}.sb{position:absolute;z-index:20;top:0;bottom:0;left:-240px;transition:left .2s;box-shadow:4px 0 20px rgba(0,0,0,.3)}.sb.open{left:0}.main{padding:14px}.row2,.row3{grid-template-columns:1fr}}
+/* content */
+.ph{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.ph h2{font-size:21px;font-weight:700;flex:1;min-width:150px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.filters .inp{width:auto;min-width:160px;flex:1;max-width:320px}
+.tw{overflow:auto}
+#cbt-root th,#cbt-root td{padding:9px 10px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top;font-size:14px}
+#cbt-root th{background:#f8fafc;font-weight:600;white-space:nowrap}
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:#e2e8f0;color:#334155;white-space:nowrap}
+.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#92400e}.badge.err{background:#fee2e2;color:#991b1b}.badge.info{background:#dbeafe;color:#1e40af}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:14px}
+.stat .n{font-size:28px;font-weight:700;color:var(--pri)}
+.stat .l{font-size:13px;color:var(--mut)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.ex-card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.ex-card h3{font-size:17px;font-weight:700}
+.ex-card .meta{font-size:13px;color:var(--mut)}
+/* soal card */
+.sc{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:10px}
+.sc .top{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.sc .no{background:var(--pri);color:#fff;border-radius:6px;padding:1px 9px;font-weight:700;font-size:13px}
+.sc .opt-l{display:flex;gap:8px;padding:3px 0;font-size:14px}
+.sc .opt-l.k{color:#166534;font-weight:600}
+.sc .opt-l i{font-style:normal;font-weight:700;min-width:18px}
+/* rich */
+.rich{overflow-wrap:anywhere;word-break:break-word}
+.rich img{max-width:100%;height:auto;display:block;margin:6px 0;border-radius:6px}
+.rich table{width:auto;border-collapse:collapse;margin:6px 0}
+.rich td,.rich th{border:1px solid #cbd5e1;padding:4px 8px}
+.rich p{margin:0 0 6px}
+/* editable */
+.ce{min-height:46px;border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px;background:#fff;outline:none;overflow-wrap:anywhere}
+.ce.one{min-height:38px}
+.ce img{max-width:240px;height:auto;display:block;margin:4px 0;cursor:pointer;outline:2px dashed transparent}
+.ce img:hover{outline-color:var(--err)}
+.tb{display:flex;gap:4px;margin-bottom:5px;flex-wrap:wrap}
+.opt-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.opt-row .lbl{font-weight:700;width:22px;padding-top:8px}
+.opt-row .ce{flex:1}
+/* modal */
+.ov{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:14px;z-index:50}
+#cbt-dialog{z-index:60}
+.mbox{background:#fff;border-radius:14px;width:100%;max-width:560px;max-height:100%;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mbox.wide{max-width:900px}.mbox.sm{max-width:400px}
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bd);font-size:16px}
+.mhead .x{background:none;border:0;font-size:18px;cursor:pointer;color:var(--mut)}
+.mbody{padding:16px;overflow:auto;flex:1}
+.mfoot{padding:12px 16px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+#cbt-toast{position:absolute;left:0;right:0;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:90;pointer-events:none;padding:0 12px}
+.toast{background:#0f172a;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:520px}
+.toast.err{background:#b91c1c}.toast.ok{background:#15803d}
+#cbt-loading{position:absolute;top:0;left:0;right:0;bottom:0;z-index:80;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center}
+.spin{width:42px;height:42px;border:4px solid #bfdbfe;border-top-color:var(--pri);border-radius:50%;animation:cbtspin .8s linear infinite}
+@keyframes cbtspin{to{transform:rotate(360deg)}}
+/* exam */
+#cbt-exam{flex:1;display:flex;flex-direction:column;min-height:0;background:#f1f5f9}
+.ex-head{flex:none;display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.ex-head b{font-size:16px;flex:1;min-width:140px}
+.ex-timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;background:#eff6ff;color:#1e40af;border-radius:8px;padding:4px 12px}
+.ex-timer.low{background:#fee2e2;color:#991b1b;animation:cbtblink 1s infinite}
+@keyframes cbtblink{50%{opacity:.55}}
+.ex-save{font-size:12px;color:var(--mut)}
+.ex-body{flex:1;overflow:auto;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:14px;align-items:start}
+@media(max-width:860px){.ex-body{grid-template-columns:1fr}}
+.qno{font-size:13px;color:var(--mut);margin-bottom:8px;font-weight:600}
+.qtext{font-size:16.5px;margin-bottom:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--bd);border-radius:10px;padding:11px 13px;margin-bottom:9px;cursor:pointer}
+.opt:hover{border-color:#93c5fd}
+.opt .ol{flex:none;width:30px;height:30px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-weight:700}
+.opt.sel{border-color:var(--pri);background:#eff6ff}
+.opt.sel .ol{background:var(--pri);color:#fff}
+.opt .rich{flex:1;padding-top:3px}
+.ex-act{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.nb{border:2px solid var(--bd);background:#fff;border-radius:8px;padding:7px 0;cursor:pointer;font-weight:600}
+.nb.a{background:#16a34a;border-color:#16a34a;color:#fff}
+.nb.r{background:#f59e0b;border-color:#f59e0b;color:#fff}
+.nb.c{outline:3px solid #93c5fd}
+.legend{font-size:12px;color:var(--mut);margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.res-box{max-width:420px;margin:40px auto;text-align:center}
+.res-box .big{font-size:56px;font-weight:800;color:var(--pri)}
+</style>
+
+<div id="cbt-root">
+  <div id="cbt-login">
+    <div class="lg-card">
+      <div class="lg-logo">🎓</div>
+      <h1 id="lg-title">CBT Online</h1>
+      <p class="mut" id="lg-sub">Computer Based Test</p>
+      <div class="note" id="lg-prev" hidden><b>MODE PREVIEW</b> (data dummy)<br>Admin: <b>admin</b> / <b>edudigital</b><br>Peserta: <b>peserta</b> / <b>edudigital</b></div>
+      <div class="fg"><label for="lg-u">Username</label><input id="lg-u" autocomplete="username" autocapitalize="off" /></div>
+      <div class="fg"><label for="lg-p">Password</label><input id="lg-p" type="password" autocomplete="current-password" /></div>
+      <button class="btn pri block" id="lg-btn">Masuk</button>
+    </div>
+  </div>
+
+  <div id="cbt-app" hidden style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div class="topbar">
+      <button class="hb" id="hb" aria-label="Menu">☰</button>
+      <b id="tb-title">CBT Online</b>
+      <span class="sp"></span>
+      <span id="tb-user"></span>
+      <button class="btn sm" id="tb-out">Keluar</button>
+    </div>
+    <div class="layout">
+      <aside class="sb" id="cbt-sb"></aside>
+      <main class="main" id="main"></main>
+    </div>
+  </div>
+
+  <div id="cbt-exam" hidden></div>
+  <div id="cbt-modal" class="ov" hidden></div>
+  <div id="cbt-dialog" class="ov" hidden></div>
+  <div id="cbt-toast"></div>
+  <div id="cbt-loading" hidden><div class="spin"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script>
+// KONFIGURASI APLIKASI
+// UBAH IS_PREVIEW KE false JIKA AKAN DI-DEPLOY KE BLOGGER
+const IS_PREVIEW = false; // Set default true untuk Canvas
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxAFzmJhC1c9PwaCranL9E27NlR6VbXYHA96stxBoiHHvR0DC8iDm9wOJQd1TPX8xA/exec";
+const APP_NAME = "CBT Online";
+
+/* ==================================================================
+   DATA DUMMY + SERVER PALSU (hanya dipakai saat IS_PREVIEW = true)
+   Logikanya meniru Code.gs agar perilaku preview sama dengan aslinya.
+================================================================== */
+const MOCK = (function () {
+  const now = Date.now(), DAY = 86400000;
+  const D = { users: [], ujian: [], soal: [], sesi: [], hasil: [], sekolah: 'SMA Negeri Contoh Nusantara' };
+  const sess = {};
+  let seq = 1000;
+  const nid = function (p) { return p + (++seq); };
+  const fail = function (msg, code) { throw { msg: msg, code: code || 'ERR' }; };
+  const shuf = function (a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  const LET = ['A', 'B', 'C', 'D', 'E'];
+  function img(label, color) {
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="170"><rect width="320" height="170" fill="' + color + '"/><text x="160" y="96" font-size="24" text-anchor="middle" fill="#fff" font-family="Arial">' + label + '</text></svg>';
+    return '<img src="data:image/svg+xml;base64,' + btoa(svg) + '" alt="gambar" />';
+  }
+  function mkQ(idUjian, nomor, teks, ops, kunci) {
+    const o = { A: '', B: '', C: '', D: '', E: '' };
+    ops.forEach(function (t, i) { o[LET[i]] = t; });
+    D.soal.push({ id: nid('Q'), idUjian: idUjian, nomor: nomor, teks: teks, opsi: o, kunci: kunci });
+  }
+  function seed() {
+    D.users.push({ id: 'U1', username: 'admin', password: 'edudigital', nama: 'Proktor Utama', kelas: '', role: 'admin', status: 'aktif' });
+    D.users.push({ id: 'U2', username: 'peserta', password: 'edudigital', nama: 'Peserta Contoh', kelas: 'X-A', role: 'siswa', status: 'aktif' });
+    [['Andi Pratama', 'X-A'], ['Budi Santoso', 'X-A'], ['Citra Lestari', 'X-B'], ['Dewi Anggraini', 'X-B'], ['Eko Wijaya', 'X-A']].forEach(function (r, i) {
+      D.users.push({ id: 'U' + (i + 3), username: r[0].split(' ')[0].toLowerCase(), password: 'abc' + (100 + i), nama: r[0], kelas: r[1], role: 'siswa', status: 'aktif' });
+    });
+    D.ujian.push({ id: 'E1', judul: 'Matematika - Aljabar Dasar', mapel: 'Matematika', kelas: 'Semua', durasi: 30, mulai: now - 3600000, selesai: now + 30 * DAY, token: '', jumlahOpsi: 4, acakSoal: 'ya', acakOpsi: 'tidak', tampilHasil: 'ya', status: 'aktif' });
+    D.ujian.push({ id: 'E2', judul: 'Bahasa Indonesia - Teks Eksposisi', mapel: 'Bahasa Indonesia', kelas: 'X-A', durasi: 20, mulai: now - 3600000, selesai: now + 30 * DAY, token: 'CBT123', jumlahOpsi: 5, acakSoal: 'ya', acakOpsi: 'ya', tampilHasil: 'tidak', status: 'aktif' });
+    mkQ('E1', 1, '<p>Hasil dari 2x + 3x adalah ...</p>', ['5x', '6x', '5x<sup>2</sup>', '6x<sup>2</sup>'], 'A');
+    mkQ('E1', 2, '<p>Jika x + 7 = 12, maka nilai x adalah ...</p>', ['3', '4', '5', '6'], 'C');
+    mkQ('E1', 3, '<p>Perhatikan gambar berikut, lalu pilih pernyataan yang benar.</p>' + img('Grafik y = 2x', '#2563eb'), ['Garis naik ke kanan', 'Garis turun ke kanan', 'Garis mendatar', 'Garis tegak lurus sumbu x'], 'A');
+    mkQ('E1', 4, '<p>Bentuk sederhana dari 3(x + 2) adalah ...</p>', ['3x + 2', '3x + 5', '3x + 6', 'x + 6'], 'C');
+    mkQ('E1', 5, '<p>Nilai dari 5<sup>2</sup> - 3 &times; 4 adalah ...</p>', ['13', '37', '88', '8'], 'A');
+    mkQ('E2', 1, '<p>Teks eksposisi bertujuan untuk ...</p>', ['Menghibur pembaca', 'Menjelaskan informasi', 'Mengajak melakukan sesuatu', 'Menceritakan pengalaman', 'Menggambarkan suasana'], 'B');
+    mkQ('E2', 2, '<p>Bagian awal teks eksposisi yang berisi pengenalan topik disebut ...</p>', ['Tesis', 'Argumentasi', 'Penegasan ulang', 'Orientasi', 'Resolusi'], 'A');
+    mkQ('E2', 3, '<p>Pilih gambar yang paling sesuai dengan kata "alam".</p>', [img('Hutan', '#16a34a'), img('Gedung', '#475569'), img('Mobil', '#dc2626'), img('Pasar', '#d97706'), img('Pabrik', '#7c3aed')], 'A');
+  }
+  seed();
+  const kelasOK = function (uk, k) {
+    uk = String(uk || '').trim().toLowerCase();
+    if (!uk || uk === 'semua' || uk === 'all') return true;
+    return uk.split(',').some(function (x) { return x.trim() === String(k || '').toLowerCase(); });
+  };
+  const genPw = function () { const c = 'abcdefghjkmnpqrstuvwxyz23456789'; let s = ''; for (let i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)]; return s; };
+  function mkUsername(nama) {
+    let base = String(nama).toLowerCase().replace(/[^a-z0-9 ]/g, '').trim().split(/\s+/)[0] || 'siswa';
+    base = base.slice(0, 10);
+    let u = base, n = 1;
+    while (D.users.some(function (x) { return x.username.toLowerCase() === u; })) { n++; u = base + n; }
+    return u;
+  }
+  function kelasListSiswa(uj) { return D.users.filter(function (x) { return x.role === 'siswa' && x.status === 'aktif' && kelasOK(uj.kelas, x.kelas); }); }
+  function finalize(s) {
+    if (s.status === 'selesai') return;
+    let b = 0, sl = 0, k = 0;
+    s.urutan.forEach(function (id) {
+      const q = D.soal.find(function (x) { return x.id === id; });
+      const a = s.jawaban[id];
+      if (!a || !a.j) k++; else if (q && a.j === q.kunci) b++; else sl++;
+    });
+    const tot = s.urutan.length || 1;
+    s.status = 'selesai';
+    s.selesai = Math.min(Date.now(), s.deadline);
+    const u = D.users.find(function (x) { return x.username === s.username; }) || {};
+    D.hasil = D.hasil.filter(function (h) { return h.sesiId !== s.id; });
+    D.hasil.push({ sesiId: s.id, idUjian: s.idUjian, username: s.username, nama: u.nama || s.username, kelas: u.kelas || '', benar: b, salah: sl, kosong: k, nilai: Math.round(b / tot * 10000) / 100, selesai: s.selesai });
+  }
+  function sesiOf(idUjian, username) { return D.sesi.find(function (y) { return y.idUjian === idUjian && y.username === username; }); }
+  function jumlahSoal(id) { return D.soal.filter(function (q) { return q.idUjian === id; }).length; }
+  function payload(s, uj) {
+    return {
+      sesiId: s.id, deadline: s.deadline, serverNow: Date.now(),
+      ujian: { judul: uj.judul, durasi: uj.durasi, jumlahOpsi: uj.jumlahOpsi },
+      soal: s.urutan.map(function (id) {
+        const q = D.soal.find(function (x) { return x.id === id; });
+        return { id: q.id, nomor: q.nomor, teks: q.teks, opsi: (s.urutanOpsi[id] || []).map(function (L) { return { key: L, teks: q.opsi[L] }; }) };
+      }),
+      jawaban: s.jawaban
+    };
+  }
+  function needAdmin(u) { if (u.role !== 'admin') fail('Akses ditolak.', 'FORBID'); }
+
+  const H = {
+    publicInfo: function () { return { sekolah: D.sekolah }; },
+    login: function (u, d) {
+      const x = D.users.find(function (y) { return y.username.toLowerCase() === String(d.username || '').trim().toLowerCase(); });
+      if (!x || x.password !== String(d.password || '')) fail('Username atau password salah.', 'LOGIN');
+      if (x.status !== 'aktif') fail('Akun Anda nonaktif. Hubungi proktor.', 'LOGIN');
+      const token = 't' + Math.random().toString(36).slice(2) + Date.now();
+      sess[token] = { username: x.username, nama: x.nama, kelas: x.kelas, role: x.role };
+      return { token: token, user: sess[token], sekolah: D.sekolah };
+    },
+    logout: function () { return {}; },
+    changePw: function (u, d) {
+      const x = D.users.find(function (y) { return y.username === u.username; });
+      if (x.password !== String(d.oldPw || '')) fail('Password lama salah.');
+      if (String(d.newPw || '').length < 5) fail('Password baru minimal 5 karakter.');
+      x.password = String(d.newPw); return {};
+    },
+    dashboard: function (u) {
+      needAdmin(u);
+      return {
+        siswa: D.users.filter(function (x) { return x.role === 'siswa'; }).length,
+        ujian: D.ujian.filter(function (x) { return x.status === 'aktif'; }).length,
+        soal: D.soal.length,
+        berlangsung: D.sesi.filter(function (s) { return s.status === 'berlangsung' && Date.now() <= s.deadline; }).length,
+        selesai: D.sesi.filter(function (s) { return s.status === 'selesai'; }).length
+      };
+    },
+    users_list: function (u) { needAdmin(u); return D.users.filter(function (x) { return x.role === 'siswa'; }); },
+    users_save: function (u, d) {
+      needAdmin(u);
+      const r = d.user || {};
+      const nama = String(r.nama || '').trim(), username = String(r.username || '').trim();
+      if (!nama) fail('Nama wajib diisi.');
+      if (!username) fail('Username wajib diisi.');
+      if (D.users.some(function (x) { return x.username.toLowerCase() === username.toLowerCase() && x.id !== r.id; })) fail('Username sudah dipakai.');
+      if (r.id) {
+        const x = D.users.find(function (y) { return y.id === r.id; });
+        if (!x) fail('Data tidak ditemukan.');
+        x.nama = nama; x.username = username; x.kelas = String(r.kelas || '').trim(); x.status = r.status || 'aktif';
+        if (r.password) x.password = String(r.password);
+      } else {
+        D.users.push({ id: nid('U'), username: username, password: String(r.password || '') || genPw(), nama: nama, kelas: String(r.kelas || '').trim(), role: 'siswa', status: r.status || 'aktif' });
+      }
+      return {};
+    },
+    users_delete: function (u, d) { needAdmin(u); D.users = D.users.filter(function (x) { return x.id !== d.id || x.role === 'admin'; }); return {}; },
+    users_resetPw: function (u, d) { needAdmin(u); const x = D.users.find(function (y) { return y.id === d.id; }); if (!x) fail('Data tidak ditemukan.'); x.password = genPw(); return { password: x.password }; },
+    users_import: function (u, d) {
+      needAdmin(u);
+      let added = 0, skipped = 0;
+      (d.rows || []).forEach(function (r) {
+        const nama = String(r.nama || '').trim();
+        if (!nama) { skipped++; return; }
+        let un = String(r.username || '').trim();
+        if (un && D.users.some(function (x) { return x.username.toLowerCase() === un.toLowerCase(); })) { skipped++; return; }
+        if (!un) un = mkUsername(nama);
+        D.users.push({ id: nid('U'), username: un, password: String(r.password || '').trim() || genPw(), nama: nama, kelas: String(r.kelas || '').trim(), role: 'siswa', status: 'aktif' });
+        added++;
+      });
+      return { added: added, skipped: skipped };
+    },
+    ujian_list: function (u) { needAdmin(u); return D.ujian.map(function (x) { const c = Object.assign({}, x); c.jumlahSoal = jumlahSoal(x.id); return c; }); },
+    ujian_save: function (u, d) {
+      needAdmin(u);
+      const r = d.ujian || {};
+      if (!String(r.judul || '').trim()) fail('Judul ujian wajib diisi.');
+      if (!(Number(r.durasi) > 0)) fail('Durasi harus lebih dari 0 menit.');
+      if (!(Number(r.mulai) > 0) || !(Number(r.selesai) > 0) || Number(r.selesai) <= Number(r.mulai)) fail('Jadwal mulai/selesai tidak valid.');
+      const o = { judul: String(r.judul).trim(), mapel: String(r.mapel || '').trim(), kelas: String(r.kelas || 'Semua').trim() || 'Semua', durasi: Number(r.durasi), mulai: Number(r.mulai), selesai: Number(r.selesai), token: String(r.token || '').trim().toUpperCase(), jumlahOpsi: Number(r.jumlahOpsi) === 5 ? 5 : 4, acakSoal: r.acakSoal === 'ya' ? 'ya' : 'tidak', acakOpsi: r.acakOpsi === 'ya' ? 'ya' : 'tidak', tampilHasil: r.tampilHasil === 'ya' ? 'ya' : 'tidak', status: r.status === 'nonaktif' ? 'nonaktif' : 'aktif' };
+      if (r.id) { const x = D.ujian.find(function (y) { return y.id === r.id; }); if (!x) fail('Ujian tidak ditemukan.'); Object.assign(x, o); }
+      else { o.id = nid('E'); D.ujian.push(o); }
+      return {};
+    },
+    ujian_delete: function (u, d) {
+      needAdmin(u);
+      D.ujian = D.ujian.filter(function (x) { return x.id !== d.id; });
+      D.soal = D.soal.filter(function (x) { return x.idUjian !== d.id; });
+      D.sesi = D.sesi.filter(function (x) { return x.idUjian !== d.id; });
+      D.hasil = D.hasil.filter(function (x) { return x.idUjian !== d.id; });
+      return {};
+    },
+    soal_list: function (u, d) { needAdmin(u); return D.soal.filter(function (q) { return q.idUjian === d.idUjian; }).sort(function (a, b) { return a.nomor - b.nomor; }); },
+    soal_save: function (u, d) {
+      needAdmin(u);
+      const r = d.soal || {};
+      const uj = D.ujian.find(function (x) { return x.id === r.idUjian; });
+      if (!uj) fail('Ujian tidak ditemukan.');
+      const o = { A: '', B: '', C: '', D: '', E: '' };
+      LET.forEach(function (L) { o[L] = String((r.opsi || {})[L] || ''); });
+      if (!r.teks) fail('Teks soal wajib diisi.');
+      if (!o.A || !o.B) fail('Minimal opsi A dan B harus diisi.');
+      if (!r.kunci || !o[r.kunci]) fail('Kunci jawaban harus salah satu opsi yang terisi.');
+      if (r.id) { const q = D.soal.find(function (x) { return x.id === r.id; }); if (!q) fail('Soal tidak ditemukan.'); q.teks = r.teks; q.opsi = o; q.kunci = r.kunci; }
+      else {
+        const mx = D.soal.filter(function (x) { return x.idUjian === r.idUjian; }).reduce(function (m, x) { return Math.max(m, x.nomor); }, 0);
+        D.soal.push({ id: nid('Q'), idUjian: r.idUjian, nomor: mx + 1, teks: r.teks, opsi: o, kunci: r.kunci });
+      }
+      return {};
+    },
+    soal_delete: function (u, d) {
+      needAdmin(u);
+      const q = D.soal.find(function (x) { return x.id === d.id; });
+      if (!q) return {};
+      D.soal = D.soal.filter(function (x) { return x.id !== d.id; });
+      D.soal.filter(function (x) { return x.idUjian === q.idUjian; }).sort(function (a, b) { return a.nomor - b.nomor; }).forEach(function (x, i) { x.nomor = i + 1; });
+      return {};
+    },
+    soal_import: function (u, d) {
+      needAdmin(u);
+      const uj = D.ujian.find(function (x) { return x.id === d.idUjian; });
+      if (!uj) fail('Ujian tidak ditemukan.');
+      if (d.mode === 'replace') D.soal = D.soal.filter(function (x) { return x.idUjian !== d.idUjian; });
+      if (d.setOpsi5) uj.jumlahOpsi = 5;
+      let mx = D.soal.filter(function (x) { return x.idUjian === d.idUjian; }).reduce(function (m, x) { return Math.max(m, x.nomor); }, 0);
+      (d.soal || []).forEach(function (r) {
+        const o = { A: '', B: '', C: '', D: '', E: '' };
+        LET.forEach(function (L) { o[L] = String((r.opsi || {})[L] || ''); });
+        D.soal.push({ id: nid('Q'), idUjian: d.idUjian, nomor: ++mx, teks: r.teks, opsi: o, kunci: r.kunci });
+      });
+      return { total: (d.soal || []).length };
+    },
+    soal_upload: function (u, d) { needAdmin(u); return { url: 'data:' + d.mime + ';base64,' + d.base64 }; },
+    monitor: function (u, d) {
+      needAdmin(u);
+      const uj = D.ujian.find(function (x) { return x.id === d.idUjian; });
+      if (!uj) fail('Ujian tidak ditemukan.');
+      const tot = jumlahSoal(uj.id);
+      const rows = kelasListSiswa(uj).map(function (x) {
+        const s = sesiOf(uj.id, x.username);
+        if (s && s.status === 'berlangsung' && Date.now() > s.deadline) finalize(s);
+        let st = 'belum', terjawab = 0, sisa = 0, nilai = '', sid = '';
+        if (s) {
+          sid = s.id; st = s.status;
+          terjawab = Object.keys(s.jawaban).filter(function (k) { return s.jawaban[k].j; }).length;
+          sisa = s.status === 'berlangsung' ? Math.max(0, Math.round((s.deadline - Date.now()) / 1000)) : 0;
+          if (s.status === 'selesai') { const h = D.hasil.find(function (z) { return z.sesiId === s.id; }); nilai = h ? h.nilai : ''; }
+        }
+        return { username: x.username, nama: x.nama, kelas: x.kelas, status: st, terjawab: terjawab, total: s ? s.urutan.length : tot, sisa: sisa, nilai: nilai, sesiId: sid };
+      });
+      return { ujian: { id: uj.id, judul: uj.judul }, rows: rows };
+    },
+    sesi_reset: function (u, d) {
+      needAdmin(u);
+      D.sesi = D.sesi.filter(function (s) { return s.id !== d.idSesi; });
+      D.hasil = D.hasil.filter(function (h) { return h.sesiId !== d.idSesi; });
+      return {};
+    },
+    sesi_finish: function (u, d) { needAdmin(u); const s = D.sesi.find(function (x) { return x.id === d.idSesi; }); if (s) finalize(s); return {}; },
+    hasil_list: function (u, d) {
+      needAdmin(u);
+      const uj = D.ujian.find(function (x) { return x.id === d.idUjian; });
+      if (!uj) fail('Ujian tidak ditemukan.');
+      D.sesi.forEach(function (s) { if (s.idUjian === uj.id && s.status === 'berlangsung' && Date.now() > s.deadline) finalize(s); });
+      return { ujian: { id: uj.id, judul: uj.judul, jumlahSoal: jumlahSoal(uj.id) }, rows: D.hasil.filter(function (h) { return h.idUjian === uj.id; }) };
+    },
+    hasil_detail: function (u, d) {
+      needAdmin(u);
+      const s = D.sesi.find(function (x) { return x.id === d.idSesi; });
+      if (!s) fail('Data tidak ditemukan.');
+      const h = D.hasil.find(function (x) { return x.sesiId === s.id; }) || {};
+      const items = D.soal.filter(function (q) { return q.idUjian === s.idUjian; }).sort(function (a, b) { return a.nomor - b.nomor; }).map(function (q) {
+        const a = s.jawaban[q.id]; const j = a && a.j ? a.j : '';
+        return { nomor: q.nomor, teks: q.teks, opsi: q.opsi, kunci: q.kunci, jawab: j, status: !j ? 'kosong' : (j === q.kunci ? 'benar' : 'salah') };
+      });
+      return { nama: h.nama, username: h.username, nilai: h.nilai, benar: h.benar, salah: h.salah, kosong: h.kosong, items: items };
+    },
+    settings_save: function (u, d) { needAdmin(u); D.sekolah = String(d.sekolah || '').trim() || APP_NAME; return { sekolah: D.sekolah }; },
+
+    siswa_exams: function (u) {
+      const out = [];
+      D.ujian.forEach(function (uj) {
+        if (uj.status !== 'aktif' || !kelasOK(uj.kelas, u.kelas)) return;
+        const js = jumlahSoal(uj.id); if (!js) return;
+        const s = sesiOf(uj.id, u.username);
+        if (s && s.status === 'berlangsung' && Date.now() > s.deadline) finalize(s);
+        let state;
+        if (s && s.status === 'selesai') state = 'selesai';
+        else if (s) state = 'berlangsung';
+        else if (Date.now() < uj.mulai) state = 'belum';
+        else if (Date.now() > uj.selesai) state = 'tutup';
+        else state = 'buka';
+        const o = { id: uj.id, judul: uj.judul, mapel: uj.mapel, durasi: uj.durasi, mulai: uj.mulai, selesai: uj.selesai, perluToken: !!uj.token, jumlahSoal: js, state: state };
+        if (state === 'selesai' && uj.tampilHasil === 'ya') { const h = D.hasil.find(function (z) { return z.sesiId === s.id; }); if (h) o.nilai = h.nilai; }
+        out.push(o);
+      });
+      return out;
+    },
+    siswa_start: function (u, d) {
+      const uj = D.ujian.find(function (x) { return x.id === d.idUjian; });
+      if (!uj || uj.status !== 'aktif' || !kelasOK(uj.kelas, u.kelas)) fail('Ujian tidak tersedia untuk Anda.');
+      let s = sesiOf(uj.id, u.username);
+      if (s) {
+        if (s.status === 'berlangsung' && Date.now() > s.deadline) finalize(s);
+        if (s.status === 'selesai') fail('Anda sudah menyelesaikan ujian ini.');
+        return payload(s, uj);
+      }
+      const t = Date.now();
+      if (t < uj.mulai) fail('Ujian belum dibuka.');
+      if (t > uj.selesai) fail('Ujian sudah ditutup.');
+      if (uj.token && String(d.token || '').trim().toUpperCase() !== uj.token) fail('Token ujian salah.');
+      let qs = D.soal.filter(function (q) { return q.idUjian === uj.id; }).sort(function (a, b) { return a.nomor - b.nomor; });
+      if (!qs.length) fail('Ujian belum memiliki soal.');
+      if (uj.acakSoal === 'ya') qs = shuf(qs);
+      const uo = {};
+      qs.forEach(function (q) {
+        let ls = LET.slice(0, uj.jumlahOpsi).filter(function (L) { return q.opsi[L]; });
+        if (uj.acakOpsi === 'ya') ls = shuf(ls);
+        uo[q.id] = ls;
+      });
+      s = { id: nid('S'), idUjian: uj.id, username: u.username, mulai: t, deadline: Math.min(t + uj.durasi * 60000, uj.selesai), status: 'berlangsung', urutan: qs.map(function (q) { return q.id; }), urutanOpsi: uo, jawaban: {}, selesai: 0 };
+      D.sesi.push(s);
+      return payload(s, uj);
+    },
+    siswa_save: function (u, d) {
+      const s = D.sesi.find(function (x) { return x.id === d.sesiId && x.username === u.username; });
+      if (!s) fail('Sesi tidak ditemukan.');
+      if (s.status !== 'berlangsung') fail('Ujian sudah selesai.', 'TIME');
+      if (Date.now() > s.deadline + 15000) { finalize(s); fail('Waktu ujian habis.', 'TIME'); }
+      if (s.urutan.indexOf(d.soalId) < 0) fail('Soal tidak valid.');
+      s.jawaban[d.soalId] = { j: String(d.j || ''), r: d.r ? 1 : 0 };
+      return {};
+    },
+    siswa_finish: function (u, d) {
+      const s = D.sesi.find(function (x) { return x.id === d.sesiId && x.username === u.username; });
+      if (!s) fail('Sesi tidak ditemukan.');
+      finalize(s);
+      const uj = D.ujian.find(function (x) { return x.id === s.idUjian; });
+      const h = D.hasil.find(function (x) { return x.sesiId === s.id; });
+      if (uj && uj.tampilHasil === 'ya') return { tampil: true, nilai: h.nilai, benar: h.benar, salah: h.salah, kosong: h.kosong };
+      return { tampil: false };
+    },
+    siswa_results: function (u) {
+      const out = [];
+      D.sesi.filter(function (s) { return s.username === u.username; }).forEach(function (s) {
+        if (s.status === 'berlangsung' && Date.now() > s.deadline) finalize(s);
+        if (s.status !== 'selesai') return;
+        const uj = D.ujian.find(function (x) { return x.id === s.idUjian; }); if (!uj) return;
+        const h = D.hasil.find(function (x) { return x.sesiId === s.id; }) || {};
+        const o = { judul: uj.judul, mapel: uj.mapel, selesai: s.selesai, tampil: uj.tampilHasil === 'ya' };
+        if (o.tampil) { o.nilai = h.nilai; o.benar = h.benar; o.salah = h.salah; o.kosong = h.kosong; }
+        out.push(o);
+      });
+      return out;
+    }
+  };
+  const PUBLIC = { login: 1, publicInfo: 1 };
+  return {
+    handle: function (action, d, token) {
+      try {
+        if (!H[action]) fail('Aksi tidak dikenal: ' + action);
+        let u = null;
+        if (!PUBLIC[action]) { u = sess[token]; if (!u) fail('Sesi berakhir. Silakan login kembali.', 'AUTH'); }
+        return { ok: true, data: H[action](u, d || {}) };
+      } catch (e) { return { ok: false, msg: e.msg || String(e), code: e.code || 'ERR' }; }
+    }
+  };
+})();
+
+/* ==================================================================
+   APLIKASI
+================================================================== */
+(function () {
+  'use strict';
+  const LET = ['A', 'B', 'C', 'D', 'E'];
+  const $ = function (s, r) { return (r || document).querySelector(s); };
+  const esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  const sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  const S = { user: null, token: null, view: '', sekolah: APP_NAME, users: [], ujian: [], soalUjian: '', hasilUjian: '', monUjian: '' };
+  let E = null, MON = null, TIMER = null;
+  const A = {}, V = {};
+  const IMGCACHE = {};
+  window.A = A;
+
+  /* ---------- util ---------- */
+  const ALLOW = { B: 1, STRONG: 1, I: 1, EM: 1, U: 1, SUB: 1, SUP: 1, BR: 1, P: 1, DIV: 1, SPAN: 1, IMG: 1, UL: 1, OL: 1, LI: 1, TABLE: 1, TBODY: 1, THEAD: 1, TR: 1, TD: 1, TH: 1 };
+  const DANGER = { SCRIPT: 1, STYLE: 1, IFRAME: 1, OBJECT: 1, EMBED: 1, LINK: 1, META: 1, SVG: 1, MATH: 1, FORM: 1, INPUT: 1, BUTTON: 1, TEXTAREA: 1, SELECT: 1, VIDEO: 1, AUDIO: 1 };
+  function san(html) {
+    const doc = new DOMParser().parseFromString('<body>' + String(html || '') + '</body>', 'text/html');
+    (function walk(n) {
+      Array.prototype.slice.call(n.childNodes).forEach(function (c) {
+        if (c.nodeType === 3) return;
+        if (c.nodeType !== 1) { n.removeChild(c); return; }
+        const tag = c.tagName;
+        if (DANGER[tag]) { n.removeChild(c); return; }
+        if (!ALLOW[tag]) { walk(c); while (c.firstChild) n.insertBefore(c.firstChild, c); n.removeChild(c); return; }
+        Array.prototype.slice.call(c.attributes).forEach(function (a) {
+          const k = a.name.toLowerCase();
+          if (tag === 'IMG' && k === 'src') { if (!/^(https:\/\/|data:image\/)/i.test(a.value)) c.setAttribute('src', ''); }
+          else if (tag === 'IMG' && (k === 'alt')) { /* boleh */ }
+          else if ((tag === 'TD' || tag === 'TH') && (k === 'colspan' || k === 'rowspan')) { /* boleh */ }
+          else c.removeAttribute(a.name);
+        });
+        if (tag === 'IMG' && !c.getAttribute('src')) { n.removeChild(c); return; }
+        walk(c);
+      });
+    })(doc.body);
+    return doc.body.innerHTML;
+  }
+  function plain(html) { const d = new DOMParser().parseFromString('<body>' + String(html || '') + '</body>', 'text/html'); return (d.body.textContent || '').replace(/\s+/g, ' ').trim(); }
+  function hasContent(html) { return !!plain(html) || /<img/i.test(html || ''); }
+  function fmtDate(ms) { if (!ms) return '-'; return new Date(Number(ms)).toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+  function toLocalInput(ms) { const d = new Date(Number(ms)); const p = function (n) { return String(n).padStart(2, '0'); }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function fmtClock(sec) { sec = Math.max(0, Math.floor(sec)); const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60; const p = function (n) { return String(n).padStart(2, '0'); }; return (h ? h + ':' : '') + p(m) + ':' + p(s); }
+  function toast(msg, type) {
+    const t = document.createElement('div'); t.className = 'toast ' + (type || ''); t.textContent = msg; $('#cbt-toast').appendChild(t);
+    setTimeout(function () { t.remove(); }, type === 'err' ? 5000 : 2800);
+  }
+  function loading(on) { $('#cbt-loading').hidden = !on; }
+  function dl(name, text, mime, bom) {
+    const b = new Blob([(bom === false ? '' : '\ufeff') + text], { type: mime || 'text/csv;charset=utf-8' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 600);
+  }
+  const csvCell = function (v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; };
+  function modal(title, body, opts) {
+    opts = opts || {};
+    const m = $('#cbt-modal');
+    m.innerHTML = '<div class="mbox' + (opts.wide ? ' wide' : '') + '"><div class="mhead"><b>' + esc(title) + '</b><button class="x" onclick="A.closeModal()">✕</button></div><div class="mbody" id="mbody">' + body + '</div>' + (opts.foot ? '<div class="mfoot">' + opts.foot + '</div>' : '') + '</div>';
+    m.hidden = false;
+  }
+  A.closeModal = function () { const m = $('#cbt-modal'); m.hidden = true; m.innerHTML = ''; };
+  function ask(msg, okText, danger) {
+    return new Promise(function (res) {
+      const d = $('#cbt-dialog');
+      d.innerHTML = '<div class="mbox sm"><div class="mbody"><p>' + msg + '</p></div><div class="mfoot"><button class="btn" id="dg-no">Batal</button><button class="btn ' + (danger ? 'danger' : 'pri') + '" id="dg-ok">' + esc(okText || 'Ya') + '</button></div></div>';
+      d.hidden = false;
+      $('#dg-no').onclick = function () { d.hidden = true; d.innerHTML = ''; res(false); };
+      $('#dg-ok').onclick = function () { d.hidden = true; d.innerHTML = ''; res(true); };
+    });
+  }
+
+  /* ---------- API ---------- */
+  async function api(action, data, opt) {
+    opt = opt || {};
+    if (!opt.silent) loading(true);
+    try {
+      let res;
+      if (IS_PREVIEW) {
+        await sleep(100);
+        res = MOCK.handle(action, data || {}, S.token);
+      } else {
+        let r;
+        try {
+          r = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: action, token: S.token, data: data || {} }), redirect: 'follow' });
+        } catch (e) { const er = new Error('Koneksi gagal. Periksa internet atau GAS_URL Anda.'); er.code = 'NET'; throw er; }
+        try { res = await r.json(); } catch (e) { const er = new Error('Respons server tidak valid. Pastikan Web App GAS di-deploy dengan akses "Anyone".'); er.code = 'NET'; throw er; }
+      }
+      if (!res.ok) { const er = new Error(res.msg || 'Terjadi kesalahan.'); er.code = res.code; throw er; }
+      return res.data;
+    } catch (e) {
+      if (e.code === 'AUTH' && S.user) doLogout(true);
+      throw e;
+    } finally { if (!opt.silent) loading(false); }
+  }
+  async function run(fn) { try { return await fn(); } catch (e) { toast(e.message || String(e), 'err'); } }
+
+  /* ---------- login / logout ---------- */
+  function applyBrand() { $('#lg-title').textContent = S.sekolah; $('#tb-title').textContent = S.sekolah; }
+  function showApp() {
+    $('#cbt-login').hidden = true; $('#cbt-exam').hidden = true; $('#cbt-app').hidden = false;
+    $('#tb-user').textContent = S.user.nama + ' (' + (S.user.role === 'admin' ? 'Proktor' : 'Siswa' + (S.user.kelas ? ' ' + S.user.kelas : '')) + ')';
+    applyBrand();
+    const adm = S.user.role === 'admin';
+    const nav = adm
+      ? [['dash', '📊', 'Dashboard'], ['siswa', '👥', 'Daftar Siswa'], ['ujian', '🗓️', 'Manajemen Ujian'], ['soal', '📝', 'Bank Soal'], ['monitor', '📡', 'Monitoring'], ['hasil', '🏆', 'Hasil & Nilai'], ['set', '⚙️', 'Pengaturan']]
+      : [['exams', '📚', 'Daftar Ujian'], ['myres', '🏆', 'Hasil Saya'], ['set', '🔑', 'Ganti Password']];
+    $('#cbt-sb').innerHTML = nav.map(function (n) { return '<button data-v="' + n[0] + '" onclick="A.go(\'' + n[0] + '\')"><span>' + n[1] + '</span><span>' + esc(n[2]) + '</span></button>'; }).join('');
+    A.go(adm ? 'dash' : 'exams');
+  }
+  A.login = async function () {
+    const u = $('#lg-u').value.trim(), p = $('#lg-p').value;
+    if (!u || !p) { toast('Isi username dan password.', 'err'); return; }
+    const r = await run(function () { return api('login', { username: u, password: p }); });
+    if (!r) return;
+    S.token = r.token; S.user = r.user; S.sekolah = r.sekolah || S.sekolah;
+    try { if (!IS_PREVIEW) sessionStorage.setItem('cbt_s', JSON.stringify({ t: r.token, u: r.user, s: S.sekolah })); } catch (e) { /* abaikan */ }
+    $('#lg-p').value = '';
+    showApp();
+  };
+  function doLogout(expired) {
+    clearInterval(MON); clearInterval(TIMER); MON = null; TIMER = null; E = null;
+    S.user = null; S.token = null;
+    try { sessionStorage.removeItem('cbt_s'); } catch (e) { /* abaikan */ }
+    A.closeModal(); $('#cbt-dialog').hidden = true;
+    $('#cbt-app').hidden = true; $('#cbt-exam').hidden = true; $('#cbt-login').hidden = false;
+    if (expired) toast('Sesi berakhir. Silakan login kembali.', 'err');
+  }
+  A.logout = async function () {
+    if (E && !E.done) { toast('Selesaikan ujian terlebih dahulu.', 'err'); return; }
+    try { await api('logout', {}, { silent: true }); } catch (e) { /* abaikan */ }
+    doLogout(false);
+  };
+  A.go = function (v) {
+    S.view = v;
+    clearInterval(MON); MON = null;
+    $('#cbt-sb').classList.remove('open');
+    Array.prototype.forEach.call(document.querySelectorAll('#cbt-sb button'), function (b) { b.classList.toggle('on', b.getAttribute('data-v') === v); });
+    $('#main').innerHTML = '<div class="mut pad">Memuat…</div>';
+    run(function () { return V[v](); });
+  };
+  const ph = function (title, acts) { return '<div class="ph"><h2>' + title + '</h2><div class="acts">' + (acts || '') + '</div></div>'; };
+  const badge = function (txt, cls) { return '<span class="badge ' + (cls || '') + '">' + esc(txt) + '</span>'; };
+
+  /* ================= ADMIN: DASHBOARD ================= */
+  V.dash = async function () {
+    const d = await api('dashboard');
+    $('#main').innerHTML = ph('Dashboard') +
+      '<div class="stats">' +
+      [['👥', d.siswa, 'Siswa terdaftar'], ['🗓️', d.ujian, 'Ujian aktif'], ['📝', d.soal, 'Total soal'], ['🟢', d.berlangsung, 'Sedang ujian'], ['✅', d.selesai, 'Ujian selesai']].map(function (x) { return '<div class="stat"><div class="l">' + x[0] + ' ' + x[2] + '</div><div class="n">' + x[1] + '</div></div>'; }).join('') +
+      '</div><div class="card"><b>Alur kerja proktor</b><ol style="margin:8px 0 0 18px;line-height:1.9"><li>Daftarkan siswa di menu <b>Daftar Siswa</b> (bisa import banyak sekaligus).</li><li>Buat jadwal di <b>Manajemen Ujian</b>.</li><li>Isi soal lewat <b>Bank Soal</b> (upload Word atau ketik manual, foto bisa ditambahkan).</li><li>Pantau siswa di <b>Monitoring</b>, lihat nilai di <b>Hasil &amp; Nilai</b>.</li></ol></div>';
+  };
+
+  /* ================= ADMIN: SISWA ================= */
+  function filteredUsers() {
+    const q = (($('#u-q') || {}).value || '').toLowerCase(), k = ($('#u-k') || {}).value || '';
+    return S.users.filter(function (u) { return (!k || u.kelas === k) && (!q || (u.nama + ' ' + u.username).toLowerCase().indexOf(q) >= 0); });
+  }
+  V.siswa = async function () {
+    S.users = await api('users_list');
+    const kls = Array.from(new Set(S.users.map(function (u) { return u.kelas; }).filter(Boolean))).sort();
+    $('#main').innerHTML = ph('Daftar Siswa',
+      '<button class="btn" onclick="A.printCards()">🖨️ Cetak Kartu</button><button class="btn" onclick="A.impUsers()">⬆️ Import</button><button class="btn pri" onclick="A.editUser(\'\')">＋ Tambah Siswa</button>') +
+      '<div class="card"><div class="filters"><input class="inp" id="u-q" placeholder="Cari nama / username…" oninput="A.filterUsers()"><select class="inp" id="u-k" style="max-width:180px" onchange="A.filterUsers()"><option value="">Semua kelas</option>' + kls.map(function (k) { return '<option>' + esc(k) + '</option>'; }).join('') + '</select><span class="mut" id="u-cnt"></span></div>' +
+      '<div class="tw"><table><thead><tr><th>No</th><th>Nama</th><th>Username</th><th>Password</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="u-body"></tbody></table></div></div>';
+    A.filterUsers();
+  };
+  A.filterUsers = function () {
+    const l = filteredUsers();
+    $('#u-cnt').textContent = l.length + ' siswa';
+    $('#u-body').innerHTML = l.length ? l.map(function (u, i) {
+      return '<tr><td>' + (i + 1) + '</td><td>' + esc(u.nama) + '</td><td><b>' + esc(u.username) + '</b></td><td><code>' + esc(u.password) + '</code></td><td>' + esc(u.kelas) + '</td><td>' + badge(u.status, u.status === 'aktif' ? 'ok' : 'err') + '</td><td style="white-space:nowrap"><button class="btn sm" onclick="A.editUser(\'' + u.id + '\')">Edit</button> <button class="btn sm" onclick="A.resetPw(\'' + u.id + '\')">Reset PW</button> <button class="btn sm danger" onclick="A.delUser(\'' + u.id + '\')">Hapus</button></td></tr>';
+    }).join('') : '<tr><td colspan="7" class="mut">Belum ada data siswa.</td></tr>';
+  };
+  A.editUser = function (id) {
+    const u = S.users.find(function (x) { return x.id === id; }) || { nama: '', username: '', password: '', kelas: '', status: 'aktif' };
+    modal(id ? 'Edit Siswa' : 'Tambah Siswa',
+      '<div class="fg"><label>Nama lengkap</label><input id="f-nama" value="' + esc(u.nama) + '"></div>' +
+      '<div class="row2"><div class="fg"><label>Username</label><input id="f-user" value="' + esc(u.username) + '" autocapitalize="off"></div><div class="fg"><label>Kelas</label><input id="f-kelas" value="' + esc(u.kelas) + '" placeholder="contoh: X-A"></div></div>' +
+      '<div class="row2"><div class="fg"><label>Password</label><div style="display:flex;gap:6px"><input id="f-pw" value="' + esc(u.password) + '"><button class="btn" type="button" onclick="document.getElementById(\'f-pw\').value=A.rndPw()">🎲</button></div><div class="hint">Kosongkan saat tambah untuk dibuat otomatis.</div></div><div class="fg"><label>Status</label><select id="f-status"><option value="aktif"' + (u.status === 'aktif' ? ' selected' : '') + '>Aktif</option><option value="nonaktif"' + (u.status === 'nonaktif' ? ' selected' : '') + '>Nonaktif</option></select></div></div>',
+      { foot: '<button class="btn" onclick="A.closeModal()">Batal</button><button class="btn pri" onclick="A.saveUser(\'' + id + '\')">Simpan</button>' });
+  };
+  A.rndPw = function () { const c = 'abcdefghjkmnpqrstuvwxyz23456789'; let s = ''; for (let i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)]; return s; };
+  A.saveUser = async function (id) {
+    const user = { id: id, nama: $('#f-nama').value, username: $('#f-user').value, kelas: $('#f-kelas').value, password: $('#f-pw').value, status: $('#f-status').value };
+    const ok = await run(function () { return api('users_save', { user: user }); });
+    if (ok) { A.closeModal(); toast('Data siswa disimpan.', 'ok'); V.siswa(); }
+  };
+  A.delUser = async function (id) {
+    const u = S.users.find(function (x) { return x.id === id; });
+    if (!await ask('Hapus siswa <b>' + esc(u ? u.nama : '') + '</b>?', 'Hapus', true)) return;
+    const ok = await run(function () { return api('users_delete', { id: id }); });
+    if (ok) { toast('Siswa dihapus.', 'ok'); V.siswa(); }
+  };
+  A.resetPw = async function (id) {
+    const r = await run(function () { return api('users_resetPw', { id: id }); });
+    if (r) { toast('Password baru: ' + r.password, 'ok'); V.siswa(); }
+  };
+  A.impUsers = function () {
+    modal('Import Siswa',
+      '<p class="mut" style="margin-bottom:8px">Satu siswa per baris, dipisahkan <b>tab</b> (tempel dari Excel), <b>titik koma</b> atau <b>koma</b>:<br><code>Nama ; Kelas ; Username(opsional) ; Password(opsional)</code><br>Username dan password yang kosong dibuat otomatis.</p>' +
+      '<div class="fg"><textarea id="imp-txt" placeholder="Andi Pratama;X-A&#10;Budi Santoso;X-A;budi01;rahasia1"></textarea></div>' +
+      '<div class="fg"><label>Atau pilih file CSV / TXT</label><input type="file" id="imp-file" accept=".csv,.txt"></div>',
+      { foot: '<button class="btn" onclick="A.closeModal()">Batal</button><button class="btn pri" onclick="A.doImpUsers()">Import</button>' });
+    $('#imp-file').onchange = function () { const f = this.files[0]; if (!f) return; const r = new FileReader(); r.onload = function () { $('#imp-txt').value = r.result; }; r.readAsText(f); };
+  };
+  A.doImpUsers = async function () {
+    const lines = $('#imp-txt').value.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+    const rows = [];
+    lines.forEach(function (l, i) {
+      const sep = l.indexOf('\t') >= 0 ? '\t' : (l.indexOf(';') >= 0 ? ';' : ',');
+      const c = l.split(sep).map(function (x) { return x.trim().replace(/^"|"$/g, ''); });
+      if (i === 0 && /^nama$/i.test(c[0])) return;
+      rows.push({ nama: c[0], kelas: c[1] || '', username: c[2] || '', password: c[3] || '' });
+    });
+    if (!rows.length) { toast('Data kosong.', 'err'); return; }
+    const r = await run(function () { return api('users_import', { rows: rows }); });
+    if (r) { A.closeModal(); toast(r.added + ' siswa ditambahkan, ' + r.skipped + ' dilewati.', 'ok'); V.siswa(); }
+  };
+  A.printCards = function () {
+    const l = filteredUsers();
+    if (!l.length) { toast('Tidak ada data untuk dicetak.', 'err'); return; }
+    const w = window.open('', '_blank');
+    if (!w) { toast('Pop-up diblokir browser. Izinkan pop-up lalu coba lagi.', 'err'); return; }
+    w.document.write('<html><head><meta charset="utf-8"><title>Kartu Login</title><style>body{font-family:Arial,sans-serif;margin:12px}.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}.c{border:1.5px dashed #555;border-radius:8px;padding:10px 12px;break-inside:avoid}.c h3{margin:0 0 6px;font-size:14px;border-bottom:1px solid #999;padding-bottom:4px}.c p{margin:2px 0;font-size:13px}</style></head><body><div class="g">' +
+      l.map(function (u) { return '<div class="c"><h3>' + esc(S.sekolah) + ' - Kartu Ujian CBT</h3><p>Nama: <b>' + esc(u.nama) + '</b></p><p>Kelas: ' + esc(u.kelas) + '</p><p>Username: <b>' + esc(u.username) + '</b></p><p>Password: <b>' + esc(u.password) + '</b></p></div>'; }).join('') + '</div></body></html>');
+    w.document.close(); setTimeout(function () { w.print(); }, 400);
+  };
+
+  /* ================= ADMIN: UJIAN ================= */
+  async function loadUjian() { S.ujian = await api('ujian_list'); return S.ujian; }
+  V.ujian = async function () {
+    await loadUjian();
+    $('#main').innerHTML = ph('Manajemen Ujian', '<button class="btn pri" onclick="A.editUjian(\'\')">＋ Buat Ujian</button>') +
+      '<div class="card"><div class="tw"><table><thead><tr><th>Judul</th><th>Kelas</th><th>Durasi</th><th>Jadwal</th><th>Token</th><th>Opsi</th><th>Soal</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
+      (S.ujian.length ? S.ujian.map(function (u) {
+        return '<tr><td><b>' + esc(u.judul) + '</b><div class="mut" style="font-size:12px">' + esc(u.mapel) + '</div></td><td>' + esc(u.kelas) + '</td><td>' + u.durasi + ' mnt</td><td style="font-size:12.5px">' + fmtDate(u.mulai) + '<br>s/d ' + fmtDate(u.selesai) + '</td><td>' + (u.token ? '<code>' + esc(u.token) + '</code>' : '<span class="mut">-</span>') + '</td><td>A–' + (u.jumlahOpsi === 5 ? 'E' : 'D') + '</td><td>' + u.jumlahSoal + '</td><td>' + badge(u.status, u.status === 'aktif' ? 'ok' : 'err') + '</td><td style="white-space:nowrap"><button class="btn sm" onclick="A.editUjian(\'' + u.id + '\')">Edit</button> <button class="btn sm" onclick="A.toSoal(\'' + u.id + '\')">Soal</button> <button class="btn sm danger" onclick="A.delUjian(\'' + u.id + '\')">Hapus</button></td></tr>';
+      }).join('') : '<tr><td colspan="9" class="mut">Belum ada ujian.</td></tr>') + '</tbody></table></div></div>';
+  };
+  A.toSoal = function (id) { S.soalUjian = id; A.go('soal'); };
+  A.editUjian = function (id) {
+    const t = Date.now();
+    const u = S.ujian.find(function (x) { return x.id === id; }) || { judul: '', mapel: '', kelas: 'Semua', durasi: 60, mulai: t, selesai: t + 7 * 86400000, token: '', jumlahOpsi: 4, acakSoal: 'tidak', acakOpsi: 'tidak', tampilHasil: 'tidak', status: 'aktif' };
+    const sel = function (idf, val, opts) { return '<select id="' + idf + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(val) === String(o[0]) ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>'; };
+    const yn = [['ya', 'Ya'], ['tidak', 'Tidak']];
+    modal(id ? 'Edit Ujian' : 'Buat Ujian',
+      '<div class="fg"><label>Judul ujian</label><input id="e-judul" value="' + esc(u.judul) + '"></div>' +
+      '<div class="row2"><div class="fg"><label>Mata pelajaran</label><input id="e-mapel" value="' + esc(u.mapel) + '"></div><div class="fg"><label>Kelas peserta</label><input id="e-kelas" value="' + esc(u.kelas) + '"><div class="hint">"Semua" atau daftar kelas dipisah koma: X-A, X-B</div></div></div>' +
+      '<div class="row3"><div class="fg"><label>Durasi (menit)</label><input id="e-dur" type="number" min="1" value="' + u.durasi + '"></div><div class="fg"><label>Mulai dibuka</label><input id="e-mulai" type="datetime-local" value="' + toLocalInput(u.mulai) + '"></div><div class="fg"><label>Ditutup</label><input id="e-selesai" type="datetime-local" value="' + toLocalInput(u.selesai) + '"></div></div>' +
+      '<div class="row2"><div class="fg"><label>Token ujian (opsional)</label><div style="display:flex;gap:6px"><input id="e-token" value="' + esc(u.token) + '" style="text-transform:uppercase"><button class="btn" type="button" onclick="document.getElementById(\'e-token\').value=A.rndToken()">🎲</button></div><div class="hint">Kosongkan jika tanpa token.</div></div><div class="fg"><label>Jumlah opsi jawaban</label>' + sel('e-opsi', u.jumlahOpsi, [[4, 'A – D (4 opsi)'], [5, 'A – E (5 opsi)']]) + '</div></div>' +
+      '<div class="row3"><div class="fg"><label>Acak urutan soal</label>' + sel('e-aS', u.acakSoal, yn) + '</div><div class="fg"><label>Acak urutan opsi</label>' + sel('e-aO', u.acakOpsi, yn) + '</div><div class="fg"><label>Tampilkan nilai ke siswa</label>' + sel('e-th', u.tampilHasil, yn) + '</div></div>' +
+      '<div class="fg"><label>Status</label>' + sel('e-st', u.status, [['aktif', 'Aktif'], ['nonaktif', 'Nonaktif']]) + '</div>',
+      { wide: true, foot: '<button class="btn" onclick="A.closeModal()">Batal</button><button class="btn pri" onclick="A.saveUjian(\'' + id + '\')">Simpan</button>' });
+  };
+  A.rndToken = function () { const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; for (let i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)]; return s; };
+  A.saveUjian = async function (id) {
+    const ujian = { id: id, judul: $('#e-judul').value, mapel: $('#e-mapel').value, kelas: $('#e-kelas').value, durasi: $('#e-dur').value, mulai: new Date($('#e-mulai').value).getTime(), selesai: new Date($('#e-selesai').value).getTime(), token: $('#e-token').value, jumlahOpsi: $('#e-opsi').value, acakSoal: $('#e-aS').value, acakOpsi: $('#e-aO').value, tampilHasil: $('#e-th').value, status: $('#e-st').value };
+    const ok = await run(function () { return api('ujian_save', { ujian: ujian }); });
+    if (ok) { A.closeModal(); toast('Ujian disimpan.', 'ok'); if (S.view === 'ujian') V.ujian(); }
+  };
+  A.delUjian = async function (id) {
+    const u = S.ujian.find(function (x) { return x.id === id; });
+    if (!await ask('Hapus ujian <b>' + esc(u ? u.judul : '') + '</b> beserta seluruh soal dan hasilnya?', 'Hapus', true)) return;
+    const ok = await run(function () { return api('ujian_delete', { id: id }); });
+    if (ok) { toast('Ujian dihapus.', 'ok'); if (S.soalUjian === id) S.soalUjian = ''; V.ujian(); }
+  };
+  function ujianSelect(idf, val, onch) {
+    return '<select class="inp" id="' + idf + '" style="max-width:420px" onchange="' + onch + '">' + (val ? '' : '<option value="">— pilih ujian —</option>') + S.ujian.map(function (u) { return '<option value="' + u.id + '"' + (u.id === val ? ' selected' : '') + '>' + esc(u.judul) + '</option>'; }).join('') + '</select>';
+  }
+
+  /* ================= ADMIN: BANK SOAL ================= */
+  const curUjian = function () { return S.ujian.find(function (u) { return u.id === S.soalUjian; }); };
+  V.soal = async function () {
+    await loadUjian();
+    if (!S.ujian.length) { $('#main').innerHTML = ph('Bank Soal') + '<div class="card">Belum ada ujian. Buat ujian dulu di menu <b>Manajemen Ujian</b>.</div>'; return; }
+    if (!curUjian()) S.soalUjian = S.ujian[0].id;
+    await renderSoal();
+  };
+  async function renderSoal() {
+    const uj = curUjian();
+    const list = await api('soal_list', { idUjian: S.soalUjian });
+    S.soalList = list;
+    const ops = uj.jumlahOpsi === 5 ? LET : LET.slice(0, 4);
+    $('#main').innerHTML = ph('Bank Soal',
+      '<button class="btn" onclick="A.tplDownload()">📄 Template Word</button><button class="btn" onclick="document.getElementById(\'w-file\').click()">⬆️ Upload Word (.docx)</button><button class="btn pri" onclick="A.editSoal(\'\')">＋ Tambah Soal</button><input type="file" id="w-file" accept=".docx" hidden>') +
+      '<div class="card"><div class="filters">' + ujianSelect('s-uj', S.soalUjian, 'A.pickSoalUjian(this.value)') + '<span class="mut">' + list.length + ' soal • opsi A–' + (uj.jumlahOpsi === 5 ? 'E' : 'D') + '</span></div></div>' +
+      (list.length ? list.map(function (q) {
+        return '<div class="sc"><div class="top"><span class="no">' + q.nomor + '</span><span class="sp"></span><button class="btn sm" onclick="A.editSoal(\'' + q.id + '\')">Edit</button><button class="btn sm danger" onclick="A.delSoal(\'' + q.id + '\')">Hapus</button></div><div class="rich">' + san(q.teks) + '</div><div style="margin-top:8px">' +
+          ops.filter(function (L) { return q.opsi[L]; }).map(function (L) { return '<div class="opt-l' + (q.kunci === L ? ' k' : '') + '"><i>' + L + '.</i><div class="rich">' + san(q.opsi[L]) + '</div>' + (q.kunci === L ? '<span>✔</span>' : '') + '</div>'; }).join('') + '</div></div>';
+      }).join('') : '<div class="card mut">Belum ada soal. Upload file Word atau tambah soal manual.</div>');
+    $('#w-file').onchange = function () { const f = this.files[0]; this.value = ''; if (f) A.parseWord(f); };
+  }
+  A.pickSoalUjian = function (id) { S.soalUjian = id; run(renderSoal); };
+  A.delSoal = async function (id) {
+    if (!await ask('Hapus soal ini?', 'Hapus', true)) return;
+    const ok = await run(function () { return api('soal_delete', { id: id }); });
+    if (ok) { toast('Soal dihapus.', 'ok'); run(renderSoal); }
+  };
+  A.editSoal = function (id) {
+    const uj = curUjian();
+    const q = (S.soalList || []).find(function (x) { return x.id === id; }) || { teks: '', opsi: {}, kunci: '' };
+    const ops = uj.jumlahOpsi === 5 ? LET : LET.slice(0, 4);
+    const fmtBtn = function (cmd, lbl) { return '<button class="btn sm" type="button" onmousedown="event.preventDefault()" onclick="document.execCommand(\'' + cmd + '\')">' + lbl + '</button>'; };
+    modal(id ? 'Edit Soal' : 'Tambah Soal',
+      '<div class="fg"><label>Teks soal</label><div class="tb">' + fmtBtn('bold', '<b>B</b>') + fmtBtn('italic', '<i>I</i>') + fmtBtn('underline', '<u>U</u>') + fmtBtn('superscript', 'x²') + fmtBtn('subscript', 'x₂') + '<button class="btn sm" type="button" onclick="A.pickImg(\'ce-teks\')">📷 Foto</button></div><div class="ce" id="ce-teks" contenteditable="true">' + san(q.teks) + '</div><div class="hint">Klik gambar di dalam kotak untuk menghapusnya.</div></div>' +
+      '<label style="font-size:13px;font-weight:600;color:#334155">Pilihan jawaban</label><div style="margin-top:6px">' +
+      ops.map(function (L) { return '<div class="opt-row"><span class="lbl">' + L + '</span><div class="ce one" id="ce-' + L + '" contenteditable="true">' + san(q.opsi[L] || '') + '</div><button class="btn sm" type="button" onclick="A.pickImg(\'ce-' + L + '\')" aria-label="Foto opsi ' + L + '">📷</button></div>'; }).join('') + '</div>' +
+      '<div class="fg" style="max-width:220px"><label>Kunci jawaban</label><select id="f-kunci"><option value="">— pilih —</option>' + ops.map(function (L) { return '<option' + (q.kunci === L ? ' selected' : '') + '>' + L + '</option>'; }).join('') + '</select></div><input type="file" id="img-file" accept="image/*" hidden>',
+      { wide: true, foot: '<button class="btn" onclick="A.closeModal()">Batal</button><button class="btn pri" onclick="A.saveSoal(\'' + id + '\')">Simpan</button>' });
+    Array.prototype.forEach.call(document.querySelectorAll('#cbt-modal .ce'), function (el) {
+      el.addEventListener('paste', function (e) { e.preventDefault(); const t = (e.clipboardData || window.clipboardData).getData('text/plain'); document.execCommand('insertText', false, t); });
+      el.addEventListener('click', async function (e) { if (e.target.tagName === 'IMG' && await ask('Hapus gambar ini?', 'Hapus', true)) e.target.remove(); });
+    });
+  };
+  A.pickImg = function (fieldId) {
+    const inp = $('#img-file');
+    inp.onchange = async function () {
+      const f = inp.files[0]; inp.value = ''; if (!f) return;
+      if (!/^image\//.test(f.type)) { toast('File harus berupa gambar.', 'err'); return; }
+      const url = await run(async function () {
+        const uri = await new Promise(function (res, rej) { const r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = rej; r.readAsDataURL(f); });
+        return await uploadUri(uri);
+      });
+      if (url) { $('#' + fieldId).insertAdjacentHTML('beforeend', '<img src="' + url + '" alt="gambar">'); toast('Foto ditambahkan.', 'ok'); }
+    };
+    inp.click();
+  };
+  A.saveSoal = async function (id) {
+    const uj = curUjian();
+    const ops = uj.jumlahOpsi === 5 ? LET : LET.slice(0, 4);
+    const opsi = {};
+    ops.forEach(function (L) { const h = san($('#ce-' + L).innerHTML); opsi[L] = hasContent(h) ? h : ''; });
+    const teks = san($('#ce-teks').innerHTML);
+    if (!hasContent(teks)) { toast('Teks soal wajib diisi.', 'err'); return; }
+    if (!opsi.A || !opsi.B) { toast('Minimal opsi A dan B harus diisi.', 'err'); return; }
+    const kunci = $('#f-kunci').value;
+    if (!kunci || !opsi[kunci]) { toast('Pilih kunci jawaban dari opsi yang terisi.', 'err'); return; }
+    const ok = await run(function () { return api('soal_save', { soal: { id: id, idUjian: S.soalUjian, teks: teks, opsi: opsi, kunci: kunci } }); });
+    if (ok) { A.closeModal(); toast('Soal disimpan.', 'ok'); run(renderSoal); }
+  };
+
+  /* ---------- gambar: perkecil + unggah ---------- */
+  function shrink(uri) {
+    return new Promise(function (res) {
+      if (/^data:image\/svg/.test(uri)) return res(uri);
+      const im = new Image();
+      im.onload = function () {
+        const MAX = 1000; let w = im.naturalWidth, h = im.naturalHeight;
+        if (w <= MAX && uri.length < 400000) return res(uri);
+        const k = Math.min(1, MAX / w); w = Math.round(w * k); h = Math.round(h * k);
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); x.drawImage(im, 0, 0, w, h);
+        res(c.toDataURL('image/jpeg', 0.85));
+      };
+      im.onerror = function () { res(uri); };
+      im.src = uri;
+    });
+  }
+  async function uploadUri(uri) {
+    const sm = await shrink(uri);
+    const mime = sm.slice(5, sm.indexOf(';')), b64 = sm.slice(sm.indexOf(',') + 1);
+    const r = await api('soal_upload', { name: 'soal_' + Date.now(), mime: mime, base64: b64 }, { silent: true });
+    return r.url;
+  }
+  async function upImgs(html) {
+    const re = /src="(data:image\/[a-zA-Z0-9.+-]+;base64,[^"]+)"/g; const found = []; let m;
+    while ((m = re.exec(html))) found.push(m[1]);
+    let out = html;
+    for (const uri of new Set(found)) {
+      if (!IMGCACHE[uri]) IMGCACHE[uri] = await uploadUri(uri);
+      out = out.split(uri).join(IMGCACHE[uri]);
+    }
+    return out;
+  }
+
+  /* ---------- import Word ---------- */
+  A.tplDownload = function () {
+    const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Template Soal CBT</title></head><body style="font-family:Calibri,Arial">' +
+      '<h2>TEMPLATE SOAL CBT ONLINE</h2><p><b>Petunjuk:</b></p><ul><li>Ketik nomor dan huruf secara manual (JANGAN pakai penomoran otomatis Word). Contoh: <b>1.</b> dan <b>A.</b></li><li>Setiap soal diawali nomor, lalu opsi A, B, C, D (opsi E boleh ditambahkan), lalu baris <b>Kunci: X</b>.</li><li>Gambar disisipkan langsung di Word: di bawah teks soal (menjadi gambar soal) atau di baris opsi (menjadi gambar opsi).</li><li>Jangan gunakan tabel. Hapus bagian petunjuk ini sebelum diupload (teks sebelum soal nomor 1 otomatis diabaikan).</li><li>Simpan sebagai <b>.docx</b> (File &gt; Simpan Sebagai &gt; Word Document).</li></ul><hr>' +
+      '<p>1. Ibu kota negara Indonesia adalah ...</p><p>A. Bandung</p><p>B. Jakarta</p><p>C. Surabaya</p><p>D. Medan</p><p>Kunci: B</p><br>' +
+      '<p>2. Hasil dari 7 &times; 8 adalah ...</p><p>A. 54</p><p>B. 56</p><p>C. 58</p><p>D. 64</p><p>E. 72</p><p>Kunci: B</p><br>' +
+      '<p>3. Perhatikan gambar berikut! (sisipkan gambar di sini)</p><p>A. Pilihan pertama</p><p>B. Pilihan kedua</p><p>C. Pilihan ketiga</p><p>D. Pilihan keempat</p><p>Kunci: A</p></body></html>';
+    dl('Template_Soal_CBT.doc', html, 'application/msword', false);
+    toast('Buka file, lalu Simpan Sebagai .docx sebelum diupload.', 'ok');
+  };
+  async function parseDocx(file) {
+    if (!window.mammoth) throw new Error('Library pembaca Word belum termuat. Periksa koneksi internet lalu muat ulang halaman.');
+    const buf = await file.arrayBuffer();
+    const r = await mammoth.convertToHtml({ arrayBuffer: buf }, { convertImage: mammoth.images.imgElement(function (img) { return img.read('base64').then(function (b) { return { src: 'data:' + img.contentType + ';base64,' + b }; }); }) });
+    const doc = new DOMParser().parseFromString('<body>' + r.value + '</body>', 'text/html');
+    const lines = [];
+    function pushLine(h) {
+      h.split(/<br\s*\/?>/i).forEach(function (part) {
+        const t = part.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+        if (t || /<img/i.test(part)) lines.push(part);
+      });
+    }
+    (function walk(n) {
+      Array.prototype.slice.call(n.childNodes).forEach(function (c) {
+        if (c.nodeType !== 1) return;
+        const t = c.tagName;
+        if (t === 'P' || /^H[1-6]$/.test(t)) pushLine(c.innerHTML);
+        else if (t === 'LI') {
+          const cl = c.cloneNode(true);
+          Array.prototype.forEach.call(cl.querySelectorAll('ol,ul'), function (x) { x.remove(); });
+          pushLine(cl.innerHTML);
+          Array.prototype.forEach.call(c.children, function (x) { if (x.tagName === 'OL' || x.tagName === 'UL') walk(x); });
+        } else walk(c);
+      });
+    })(doc.body);
+    const RQ = /^((?:\s|<[^>]+>)*?)(\d{1,3})\s*[.)](?:<\/[a-z]+>)*\s+/i;
+    const RO = /^((?:\s|<[^>]+>)*?)([A-Ea-e])\s*[.)](?:<\/[a-z]+>)*(?:\s+|(?=<)|$)/;
+    const RK = /^\s*(?:kunci(?:\s*jawaban)?|jawaban|key|answer)\s*[:=\-]\s*([A-Ea-e])\b/i;
+    const qs = []; let cur = null, lastOpt = null;
+    lines.forEach(function (h) {
+      const text = h.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+      let m = RK.exec(text);
+      if (m) { if (cur) cur.kunci = m[1].toUpperCase(); return; }
+      m = RQ.exec(h);
+      if (m) { cur = { teks: h.slice(m[0].length), opsi: {}, kunci: '' }; qs.push(cur); lastOpt = null; return; }
+      m = RO.exec(h);
+      if (m && cur) { lastOpt = m[2].toUpperCase(); cur.opsi[lastOpt] = h.slice(m[0].length); return; }
+      if (!cur) return;
+      if (lastOpt) cur.opsi[lastOpt] += '<br>' + h; else cur.teks += '<br>' + h;
+    });
+    qs.forEach(function (q) { q.teks = q.teks.replace(/^(<br>)+/, ''); });
+    return qs;
+  }
+  let IMP = null;
+  A.parseWord = async function (file) {
+    if (!/\.docx$/i.test(file.name)) { toast('File harus berformat .docx (bukan .doc).', 'err'); return; }
+    const items = await run(async function () { loading(true); try { return await parseDocx(file); } finally { loading(false); } });
+    if (!items) return;
+    if (!items.length) { toast('Tidak ada soal terbaca. Pastikan format: "1. soal", "A. opsi", "Kunci: B".', 'err'); return; }
+    IMP = { items: items, file: file.name };
+    renderImp();
+  };
+  function renderImp() {
+    const uj = curUjian();
+    const needE = IMP.items.some(function (q) { return q.opsi.E; }) && uj.jumlahOpsi !== 5;
+    let bad = 0;
+    const rows = IMP.items.map(function (q, i) {
+      const ls = LET.filter(function (L) { return q.opsi[L]; });
+      const imgs = (q.teks.match(/<img/gi) || []).length;
+      const probs = [];
+      if (!hasContent(q.teks)) probs.push('teks kosong');
+      if (ls.length < 2) probs.push('opsi kurang');
+      if (!q.kunci || !q.opsi[q.kunci]) probs.push('kunci belum valid');
+      if (probs.length) bad++;
+      return '<tr><td>' + (i + 1) + '</td><td>' + esc(plain(q.teks).slice(0, 90)) + (imgs ? ' 🖼×' + imgs : '') + '</td><td>' + ls.join(' ') + '</td><td><select onchange="A.impKey(' + i + ',this.value)"><option value="">?</option>' + ls.map(function (L) { return '<option' + (q.kunci === L ? ' selected' : '') + '>' + L + '</option>'; }).join('') + '</select></td><td>' + (probs.length ? badge(probs.join(', '), 'err') : badge('OK', 'ok')) + '</td></tr>';
+    }).join('');
+    modal('Pratinjau Import: ' + IMP.file,
+      '<p style="margin-bottom:8px"><b>' + IMP.items.length + '</b> soal terbaca untuk ujian <b>' + esc(uj.judul) + '</b>. Periksa dan lengkapi kunci jawaban yang belum terbaca.</p><div class="tw" style="max-height:44vh"><table><thead><tr><th>No</th><th>Soal</th><th>Opsi</th><th>Kunci</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<div style="margin-top:12px"><label style="margin-right:16px"><input type="radio" name="imp-mode" value="append" checked> Tambahkan ke soal yang ada</label><label><input type="radio" name="imp-mode" value="replace"> Ganti semua soal ujian ini</label></div>' +
+      (needE ? '<div style="margin-top:8px"><label><input type="checkbox" id="imp-5" checked> Ujian ini 4 opsi, tetapi file memuat opsi E. Ubah ujian menjadi 5 opsi (A–E).</label></div>' : '') +
+      '<div id="imp-prog" class="mut" style="margin-top:10px"></div>',
+      { wide: true, foot: '<button class="btn" onclick="A.closeModal()">Batal</button><button class="btn pri" id="imp-go" onclick="A.impSave()"' + (bad ? ' disabled' : '') + '>Simpan ' + IMP.items.length + ' Soal</button>' });
+  }
+  A.impKey = function (i, v) { IMP.items[i].kunci = v; renderImp(); };
+  A.impSave = async function () {
+    const mode = document.querySelector('input[name=imp-mode]:checked').value;
+    const set5 = $('#imp-5') && $('#imp-5').checked;
+    if (mode === 'replace' && !await ask('Semua soal lama pada ujian ini akan <b>diganti</b>. Lanjutkan?', 'Ganti', true)) return;
+    $('#imp-go').disabled = true;
+    try {
+      const out = [];
+      for (let i = 0; i < IMP.items.length; i++) {
+        $('#imp-prog').textContent = 'Memproses soal ' + (i + 1) + ' dari ' + IMP.items.length + ' (mengunggah gambar bila ada)…';
+        const q = IMP.items[i]; const o = { teks: san(await upImgs(q.teks)), opsi: {}, kunci: q.kunci };
+        for (const L of LET) if (q.opsi[L]) o.opsi[L] = san(await upImgs(q.opsi[L]));
+        out.push(o);
+      }
+      $('#imp-prog').textContent = 'Menyimpan ke database…';
+      await api('soal_import', { idUjian: S.soalUjian, mode: mode, soal: out, setOpsi5: !!set5 });
+      A.closeModal(); IMP = null; toast(out.length + ' soal berhasil diimport.', 'ok');
+      await loadUjian(); renderSoal();
+    } catch (e) { toast(e.message || String(e), 'err'); const b = $('#imp-go'); if (b) b.disabled = false; }
+  };
+
+  /* ================= ADMIN: MONITORING ================= */
+  V.monitor = async function () {
+    await loadUjian();
+    if (!S.ujian.length) { $('#main').innerHTML = ph('Monitoring') + '<div class="card">Belum ada ujian.</div>'; return; }
+    if (!S.ujian.some(function (u) { return u.id === S.monUjian; })) S.monUjian = S.ujian[0].id;
+    $('#main').innerHTML = ph('Monitoring Ujian') + '<div class="card"><div class="filters">' + ujianSelect('m-uj', S.monUjian, 'A.pickMon(this.value)') + '<button class="btn" onclick="A.loadMon()">🔄 Segarkan</button><span class="mut" id="m-info"></span></div><div class="tw"><table><thead><tr><th>Nama</th><th>Kelas</th><th>Status</th><th>Terjawab</th><th>Sisa waktu</th><th>Nilai</th><th>Aksi</th></tr></thead><tbody id="m-body"><tr><td colspan="7" class="mut">Memuat…</td></tr></tbody></table></div></div>';
+    await A.loadMon();
+    MON = setInterval(function () { if (S.view === 'monitor') A.loadMon(true); }, 10000);
+  };
+  A.pickMon = function (id) { S.monUjian = id; A.loadMon(); };
+  A.loadMon = async function (silent) {
+    try {
+      const r = await api('monitor', { idUjian: S.monUjian }, { silent: !!silent });
+      if (S.view !== 'monitor' || !$('#m-body')) return;
+      const c = { belum: 0, berlangsung: 0, selesai: 0 }; r.rows.forEach(function (x) { c[x.status] = (c[x.status] || 0) + 1; });
+      $('#m-info').textContent = 'Belum mulai: ' + c.belum + ' • Mengerjakan: ' + c.berlangsung + ' • Selesai: ' + c.selesai + ' • diperbarui ' + new Date().toLocaleTimeString('id-ID');
+      $('#m-body').innerHTML = r.rows.length ? r.rows.map(function (x) {
+        const st = x.status === 'selesai' ? badge('Selesai', 'ok') : x.status === 'berlangsung' ? badge('Mengerjakan', 'info') : badge('Belum mulai', '');
+        const act = x.sesiId ? (x.status === 'berlangsung' ? '<button class="btn sm" onclick="A.finSesi(\'' + x.sesiId + '\')">Paksa selesai</button> ' : '') + '<button class="btn sm danger" onclick="A.resetSesi(\'' + x.sesiId + '\')">Reset</button>' : '';
+        return '<tr><td>' + esc(x.nama) + '<div class="mut" style="font-size:12px">' + esc(x.username) + '</div></td><td>' + esc(x.kelas) + '</td><td>' + st + '</td><td>' + (x.sesiId ? x.terjawab + ' / ' + x.total : '-') + '</td><td>' + (x.status === 'berlangsung' ? fmtClock(x.sisa) : '-') + '</td><td>' + (x.nilai !== '' ? esc(x.nilai) : '-') + '</td><td style="white-space:nowrap">' + act + '</td></tr>';
+      }).join('') : '<tr><td colspan="7" class="mut">Tidak ada siswa untuk ujian ini.</td></tr>';
+    } catch (e) { if (!silent) toast(e.message, 'err'); }
+  };
+  A.resetSesi = async function (id) {
+    if (!await ask('Reset sesi siswa ini? Jawaban dan nilai dihapus, siswa dapat mengulang dari awal.', 'Reset', true)) return;
+    const ok = await run(function () { return api('sesi_reset', { idSesi: id }); });
+    if (ok) { toast('Sesi direset.', 'ok'); A.loadMon(); }
+  };
+  A.finSesi = async function (id) {
+    if (!await ask('Paksa selesaikan ujian siswa ini sekarang?', 'Selesaikan', true)) return;
+    const ok = await run(function () { return api('sesi_finish', { idSesi: id }); });
+    if (ok) { toast('Ujian diselesaikan.', 'ok'); A.loadMon(); }
+  };
+
+  /* ================= ADMIN: HASIL ================= */
+  V.hasil = async function () {
+    await loadUjian();
+    if (!S.ujian.length) { $('#main').innerHTML = ph('Hasil & Nilai') + '<div class="card">Belum ada ujian.</div>'; return; }
+    if (!S.ujian.some(function (u) { return u.id === S.hasilUjian; })) S.hasilUjian = S.ujian[0].id;
+    $('#main').innerHTML = ph('Hasil & Nilai', '<button class="btn" onclick="A.exportHasil()">⬇️ Ekspor CSV</button>') + '<div class="card"><div class="filters">' + ujianSelect('h-uj', S.hasilUjian, 'A.pickHasil(this.value)') + '<span class="mut" id="h-info"></span></div><div class="tw"><table><thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Benar</th><th>Salah</th><th>Kosong</th><th>Nilai</th><th>Selesai</th><th>Aksi</th></tr></thead><tbody id="h-body"></tbody></table></div></div>';
+    await A.loadHasil();
+  };
+  A.pickHasil = function (id) { S.hasilUjian = id; A.loadHasil(); };
+  A.loadHasil = async function () {
+    const r = await run(function () { return api('hasil_list', { idUjian: S.hasilUjian }); });
+    if (!r) return;
+    S.hasil = r;
+    const n = r.rows.map(function (x) { return Number(x.nilai); });
+    $('#h-info').textContent = r.rows.length ? r.rows.length + ' peserta • rata-rata ' + (n.reduce(function (a, b) { return a + b; }, 0) / n.length).toFixed(1) + ' • tertinggi ' + Math.max.apply(null, n) + ' • terendah ' + Math.min.apply(null, n) : 'Belum ada hasil.';
+    $('#h-body').innerHTML = r.rows.length ? r.rows.slice().sort(function (a, b) { return String(a.nama).localeCompare(String(b.nama)); }).map(function (x, i) {
+      return '<tr><td>' + (i + 1) + '</td><td>' + esc(x.nama) + '</td><td>' + esc(x.kelas) + '</td><td>' + x.benar + '</td><td>' + x.salah + '</td><td>' + x.kosong + '</td><td><b>' + x.nilai + '</b></td><td style="font-size:12.5px">' + fmtDate(x.selesai) + '</td><td><button class="btn sm" onclick="A.detail(\'' + x.sesiId + '\')">Detail</button></td></tr>';
+    }).join('') : '<tr><td colspan="9" class="mut">Belum ada siswa yang menyelesaikan ujian ini.</td></tr>';
+  };
+  A.detail = async function (idSesi) {
+    const r = await run(function () { return api('hasil_detail', { idSesi: idSesi }); });
+    if (!r) return;
+    modal('Detail: ' + r.nama + ' (nilai ' + r.nilai + ')',
+      '<p class="mut" style="margin-bottom:10px">Benar ' + r.benar + ' • Salah ' + r.salah + ' • Kosong ' + r.kosong + '</p>' +
+      r.items.map(function (it) {
+        return '<div class="sc"><div class="top"><span class="no">' + it.nomor + '</span>' + badge(it.status, it.status === 'benar' ? 'ok' : it.status === 'salah' ? 'err' : 'warn') + '<span class="mut">Jawab: <b>' + (it.jawab || '-') + '</b> • Kunci: <b>' + it.kunci + '</b></span></div><div class="rich">' + san(it.teks) + '</div></div>';
+      }).join(''), { wide: true });
+  };
+  A.exportHasil = function () {
+    if (!S.hasil || !S.hasil.rows.length) { toast('Belum ada data untuk diekspor.', 'err'); return; }
+    const head = ['No', 'Nama', 'Username', 'Kelas', 'Benar', 'Salah', 'Kosong', 'Nilai', 'Waktu Selesai'];
+    const lines = [head.map(csvCell).join(',')];
+    S.hasil.rows.forEach(function (x, i) { lines.push([i + 1, x.nama, x.username, x.kelas, x.benar, x.salah, x.kosong, x.nilai, fmtDate(x.selesai)].map(csvCell).join(',')); });
+    dl('Hasil_' + String(S.hasil.ujian.judul).replace(/[^a-z0-9]+/gi, '_') + '.csv', lines.join('\r\n'));
+  };
+
+  /* ================= PENGATURAN (admin & siswa) ================= */
+  V.set = async function () {
+    const adm = S.user.role === 'admin';
+    $('#main').innerHTML = ph(adm ? 'Pengaturan' : 'Ganti Password') +
+      (adm ? '<div class="card" style="max-width:520px"><b>Identitas Sekolah</b><div class="fg" style="margin-top:10px"><label>Nama sekolah / judul aplikasi</label><input id="s-nama" value="' + esc(S.sekolah) + '"></div><button class="btn pri" onclick="A.saveSet()">Simpan</button></div>' : '') +
+      '<div class="card" style="max-width:520px"><b>Ganti Password</b><div class="fg" style="margin-top:10px"><label>Password lama</label><input id="p-old" type="password"></div><div class="fg"><label>Password baru</label><input id="p-new" type="password"></div><div class="fg"><label>Ulangi password baru</label><input id="p-new2" type="password"></div><button class="btn pri" onclick="A.savePw()">Ubah Password</button></div>';
+  };
+  A.saveSet = async function () {
+    const r = await run(function () { return api('settings_save', { sekolah: $('#s-nama').value }); });
+    if (r) { S.sekolah = r.sekolah; applyBrand(); toast('Pengaturan disimpan.', 'ok'); }
+  };
+  A.savePw = async function () {
+    if ($('#p-new').value !== $('#p-new2').value) { toast('Konfirmasi password tidak sama.', 'err'); return; }
+    const ok = await run(function () { return api('changePw', { oldPw: $('#p-old').value, newPw: $('#p-new').value }); });
+    if (ok) { toast('Password berhasil diubah.', 'ok'); $('#p-old').value = $('#p-new').value = $('#p-new2').value = ''; }
+  };
+
+  /* ================= SISWA: DAFTAR UJIAN ================= */
+  V.exams = async function () {
+    const list = await api('siswa_exams');
+    $('#main').innerHTML = ph('Daftar Ujian') + (list.length ? '<div class="grid2">' + list.map(function (u) {
+      let act = '', bd = '';
+      if (u.state === 'buka') { bd = badge('Dibuka', 'ok'); act = '<button class="btn pri" onclick="A.startExam(\'' + u.id + '\',' + (u.perluToken ? 1 : 0) + ',0)">Mulai Ujian</button>'; }
+      else if (u.state === 'berlangsung') { bd = badge('Sedang berlangsung', 'info'); act = '<button class="btn ok" onclick="A.startExam(\'' + u.id + '\',0,1)">Lanjutkan Ujian</button>'; }
+      else if (u.state === 'belum') { bd = badge('Belum dibuka', 'warn'); act = '<button class="btn" disabled>Dibuka ' + fmtDate(u.mulai) + '</button>'; }
+      else if (u.state === 'tutup') { bd = badge('Ditutup', 'err'); act = '<button class="btn" disabled>Ujian ditutup</button>'; }
+      else { bd = badge('Selesai', 'ok'); act = '<button class="btn" disabled>' + (u.nilai !== undefined ? 'Nilai: ' + u.nilai : 'Sudah dikerjakan') + '</button>'; }
+      return '<div class="ex-card"><div>' + bd + '</div><h3>' + esc(u.judul) + '</h3><div class="meta">' + esc(u.mapel) + ' • ' + u.jumlahSoal + ' soal • ' + u.durasi + ' menit' + (u.perluToken ? ' • perlu token' : '') + '</div><div class="meta">Buka: ' + fmtDate(u.mulai) + '<br>Tutup: ' + fmtDate(u.selesai) + '</div>' + act + '</div>';
+    }).join('') + '</div>' : '<div class="card mut">Belum ada ujian untuk kelas Anda.</div>');
+  };
+  V.myres = async function () {
+    const list = await api('siswa_results');
+    $('#main').innerHTML = ph('Hasil Saya') + '<div class="card"><div class="tw"><table><thead><tr><th>Ujian</th><th>Mapel</th><th>Selesai</th><th>Nilai</th><th>Benar</th><th>Salah</th><th>Kosong</th></tr></thead><tbody>' +
+      (list.length ? list.map(function (x) { return '<tr><td>' + esc(x.judul) + '</td><td>' + esc(x.mapel) + '</td><td>' + fmtDate(x.selesai) + '</td>' + (x.tampil ? '<td><b>' + x.nilai + '</b></td><td>' + x.benar + '</td><td>' + x.salah + '</td><td>' + x.kosong + '</td>' : '<td colspan="4" class="mut">Nilai belum ditampilkan oleh proktor</td>') + '</tr>'; }).join('') : '<tr><td colspan="7" class="mut">Belum ada ujian yang diselesaikan.</td></tr>') + '</tbody></table></div></div>';
+  };
+
+  /* ================= SISWA: PELAKSANAAN UJIAN ================= */
+  A.startExam = async function (id, needToken, resume) {
+    if (resume) return beginExam(id, '');
+    if (needToken) {
+      modal('Masukkan Token Ujian', '<div class="fg"><label>Token</label><input id="tk" style="text-transform:uppercase;font-size:20px;letter-spacing:3px;text-align:center" autocomplete="off"></div><p class="mut">Token diberikan oleh proktor/pengawas.</p>',
+        { foot: '<button class="btn" onclick="A.closeModal()">Batal</button><button class="btn pri" onclick="A.tokenGo(\'' + id + '\')">Mulai</button>' });
+      setTimeout(function () { const t = $('#tk'); if (t) t.focus(); }, 80);
+      return;
+    }
+    if (await ask('Mulai ujian sekarang? Waktu akan langsung berjalan dan tidak bisa dihentikan.', 'Mulai')) beginExam(id, '');
+  };
+  A.tokenGo = function (id) { const t = $('#tk').value.trim(); if (!t) { toast('Token wajib diisi.', 'err'); return; } A.closeModal(); beginExam(id, t); };
+  async function beginExam(id, token) {
+    const d = await run(function () { return api('siswa_start', { idUjian: id, token: token }); });
+    if (!d) return;
+    E = { sesiId: d.sesiId, soal: d.soal, idx: 0, jawaban: d.jawaban || {}, deadline: d.deadline, offset: d.serverNow - Date.now(), pending: {}, judul: d.ujian.judul, done: false, flushing: false, retry: null, finishing: false };
+    $('#cbt-app').hidden = true; $('#cbt-exam').hidden = false;
+    $('#cbt-exam').innerHTML = '<div class="ex-head"><b>' + esc(d.ujian.judul) + '</b><span class="ex-save" id="ex-save"></span><span class="ex-timer" id="ex-timer">--:--</span><button class="btn ok" onclick="A.finishAsk()">Selesai</button></div><div class="ex-body"><div class="card" id="ex-q"></div><div class="card"><b>Navigasi Soal</b><div class="nav-grid" id="ex-nav" style="margin-top:10px"></div><div class="legend"><span>🟩 terjawab</span><span>🟧 ragu-ragu</span><span>⬜ belum</span></div></div></div>';
+    exQ(); exNav(); tick();
+    clearInterval(TIMER); TIMER = setInterval(tick, 1000);
+  }
+  function remaining() { return (E.deadline - (Date.now() + E.offset)) / 1000; }
+  function tick() {
+    if (!E || E.done) return;
+    const r = remaining(); const t = $('#ex-timer'); if (!t) return;
+    t.textContent = fmtClock(r); t.classList.toggle('low', r <= 300);
+    if (r <= 0 && !E.finishing) finishExam(true);
+  }
+  function exQ() {
+    const q = E.soal[E.idx], a = E.jawaban[q.id] || {};
+    $('#ex-q').innerHTML = '<div class="qno">Soal ' + (E.idx + 1) + ' dari ' + E.soal.length + '</div><div class="qtext rich">' + san(q.teks) + '</div>' +
+      q.opsi.map(function (o, i) { return '<button class="opt' + (a.j === o.key ? ' sel' : '') + '" onclick="A.pick(\'' + q.id + '\',\'' + o.key + '\')"><span class="ol">' + LET[i] + '</span><span class="rich">' + san(o.teks) + '</span></button>'; }).join('') +
+      '<div class="ex-act"><button class="btn" ' + (E.idx === 0 ? 'disabled' : '') + ' onclick="A.nav(' + (E.idx - 1) + ')">◀ Sebelumnya</button><button class="btn ' + (a.r ? 'danger' : '') + '" onclick="A.ragu(\'' + q.id + '\')">' + (a.r ? '✔ Ragu-ragu' : 'Ragu-ragu') + '</button>' + (a.j ? '<button class="btn" onclick="A.clearAns(\'' + q.id + '\')">Hapus jawaban</button>' : '') + (E.idx < E.soal.length - 1 ? '<button class="btn pri" onclick="A.nav(' + (E.idx + 1) + ')">Berikutnya ▶</button>' : '<button class="btn ok" onclick="A.finishAsk()">Selesai ✔</button>') + '</div>';
+    const b = $('.ex-body'); if (b) b.scrollTop = 0;
+  }
+  function exNav() {
+    $('#ex-nav').innerHTML = E.soal.map(function (q, i) {
+      const a = E.jawaban[q.id] || {};
+      return '<button class="nb' + (a.r ? ' r' : a.j ? ' a' : '') + (i === E.idx ? ' c' : '') + '" onclick="A.nav(' + i + ')">' + (i + 1) + '</button>';
+    }).join('');
+  }
+  A.nav = function (i) { if (!E || i < 0 || i >= E.soal.length) return; E.idx = i; exQ(); exNav(); };
+  function setAns(id, patch) {
+    const a = E.jawaban[id] || { j: '', r: 0 };
+    E.jawaban[id] = { j: patch.j !== undefined ? patch.j : a.j, r: patch.r !== undefined ? patch.r : a.r };
+    E.pending[id] = { j: E.jawaban[id].j, r: E.jawaban[id].r ? 1 : 0 };
+    exQ(); exNav(); flushSave();
+  }
+  A.pick = function (id, key) { const a = E.jawaban[id] || {}; setAns(id, { j: a.j === key ? '' : key }); };
+  A.clearAns = function (id) { setAns(id, { j: '' }); };
+  A.ragu = function (id) { const a = E.jawaban[id] || {}; setAns(id, { r: a.r ? 0 : 1 }); };
+  const saveState = function (t) { const e = $('#ex-save'); if (e) e.textContent = t; };
+  async function flushSave() {
+    if (!E || E.flushing) return;
+    E.flushing = true; saveState('Menyimpan…');
+    try {
+      while (E && Object.keys(E.pending).length) {
+        const id = Object.keys(E.pending)[0], v = E.pending[id];
+        await api('siswa_save', { sesiId: E.sesiId, soalId: id, j: v.j, r: v.r }, { silent: true });
+        if (E && E.pending[id] === v) delete E.pending[id];
+      }
+      saveState('Tersimpan ✓');
+    } catch (e) {
+      if (!E) return;
+      if (e.code === 'TIME') { E.pending = {}; if (!E.finishing) finishExam(true); return; }
+      saveState('Gagal menyimpan, mencoba lagi…');
+      clearTimeout(E.retry); E.retry = setTimeout(flushSave, 4000);
+    } finally { if (E) E.flushing = false; }
+  }
+  async function drain() {
+    for (let i = 0; i < 6 && E && Object.keys(E.pending).length; i++) { await flushSave(); while (E && E.flushing) await sleep(100); if (E && Object.keys(E.pending).length) await sleep(800); }
+  }
+  A.finishAsk = async function () {
+    if (!E || E.finishing) return;
+    const total = E.soal.length;
+    const done = E.soal.filter(function (q) { return (E.jawaban[q.id] || {}).j; }).length;
+    const ragu = E.soal.filter(function (q) { return (E.jawaban[q.id] || {}).r; }).length;
+    const msg = 'Terjawab <b>' + done + '</b> dari <b>' + total + '</b> soal.' + (done < total ? '<br><span style="color:#b91c1c">' + (total - done) + ' soal belum dijawab.</span>' : '') + (ragu ? '<br>' + ragu + ' soal masih ditandai ragu-ragu.' : '') + '<br><br>Yakin ingin menyelesaikan ujian? Jawaban tidak dapat diubah lagi.';
+    if (await ask(msg, 'Ya, Selesai')) finishExam(false);
+  };
+  async function finishExam(timeUp) {
+    if (!E || E.finishing) return;
+    E.finishing = true; clearInterval(TIMER);
+    loading(true);
+    try {
+      await drain();
+      let r = null, lastErr = null;
+      for (let i = 0; i < 3 && !r; i++) { try { r = await api('siswa_finish', { sesiId: E.sesiId }, { silent: true }); } catch (e) { lastErr = e; await sleep(1200); } }
+      if (!r) throw lastErr || new Error('Gagal menyelesaikan ujian.');
+      E.done = true; clearTimeout(E.retry);
+      $('#cbt-exam').innerHTML = '<div class="res-box card"><div style="font-size:44px">' + (timeUp ? '⏰' : '✅') + '</div><h2 style="margin:6px 0">' + (timeUp ? 'Waktu Habis' : 'Ujian Selesai') + '</h2><p class="mut">Jawaban Anda telah tersimpan.</p>' + (r.tampil ? '<div class="big">' + r.nilai + '</div><p>Benar ' + r.benar + ' • Salah ' + r.salah + ' • Kosong ' + r.kosong + '</p>' : '<p style="margin:14px 0"><b>Nilai akan diumumkan oleh proktor.</b></p>') + '<button class="btn pri" style="margin-top:14px" onclick="A.exitExam()">Kembali ke Daftar Ujian</button></div>';
+    } catch (e) {
+      E.finishing = false; TIMER = setInterval(tick, 1000);
+      toast((e && e.message) || 'Gagal menyelesaikan ujian. Coba lagi.', 'err');
+    } finally { loading(false); }
+  }
+  A.exitExam = function () { E = null; $('#cbt-exam').hidden = true; $('#cbt-exam').innerHTML = ''; $('#cbt-app').hidden = false; A.go('exams'); };
+  window.addEventListener('beforeunload', function (ev) { if (E && !E.done) { ev.preventDefault(); ev.returnValue = ''; } });
+
+  /* ================= INIT ================= */
+  $('#lg-btn').onclick = A.login;
+  $('#lg-p').addEventListener('keydown', function (e) { if (e.key === 'Enter') A.login(); });
+  $('#lg-u').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#lg-p').focus(); });
+  $('#tb-out').onclick = A.logout;
+  $('#hb').onclick = function () { $('#cbt-sb').classList.toggle('open'); };
+  $('#main').addEventListener('click', function () { $('#cbt-sb').classList.remove('open'); });
+  $('#lg-prev').hidden = !IS_PREVIEW;
+  if (!IS_PREVIEW && GAS_URL.indexOf('URL_DEPLOY') >= 0) { toast('GAS_URL belum diisi. Isi URL Web App di bagian konfigurasi.', 'err'); }
+  let restored = false;
+  try {
+    const raw = !IS_PREVIEW && sessionStorage.getItem('cbt_s');
+    if (raw) { const o = JSON.parse(raw); S.token = o.t; S.user = o.u; S.sekolah = o.s || S.sekolah; restored = true; }
+  } catch (e) { /* abaikan */ }
+  applyBrand();
+  if (restored) showApp();
+  api('publicInfo', {}, { silent: true }).then(function (r) { if (r && r.sekolah) { S.sekolah = r.sekolah; applyBrand(); } }).catch(function () { /* abaikan */ });
+})();
+</script>
